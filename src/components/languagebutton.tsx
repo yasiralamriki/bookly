@@ -14,7 +14,7 @@ export function LanguageButton() {
         </SelectTrigger>
         <SelectContent>
             <SelectItem value="en">English</SelectItem>
-            <SelectItem value="ar">Arabic</SelectItem>
+            <SelectItem value="ar">العربية</SelectItem>
         </SelectContent>
         </Select>
     )
