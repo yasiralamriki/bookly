@@ -19,7 +19,7 @@ export function Main() {
                             <CommandList></CommandList>
                         </Command>
                     </div>
-                    <Button size="lg">
+                    <Button size="lg" className="cursor-pointer">
                         <Plus /> New Book
                     </Button>
                 </div>
