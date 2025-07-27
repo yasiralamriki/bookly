@@ -4,9 +4,16 @@ import {
   CommandInput,
   CommandList,
 } from "@/components/ui/command"
-import { Plus, CircleAlert } from "lucide-react";
+import { Plus, CircleAlert, ArrowDownNarrowWide, ArrowDownWideNarrow } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export function Main() {
     return (
@@ -14,10 +21,25 @@ export function Main() {
             <div id="main-container" className="self-stretch h-full inline-flex flex-col justify-start items-start gap-4">
                 <div id="control-container" className="self-stretch inline-flex justify-between items-center">
                     <div id="search-container" className="inline-flex justify-start items-center gap-4">
-                        <Command className="w-64 border rounded-md [&>[data-slot=command-input-wrapper]]:h-10 [&>[data-slot=command-input-wrapper]]:border-none">
+                        <Command className="w-64 h-10  border rounded-md [&>[data-slot=command-input-wrapper]]:border-none">
                             <CommandInput placeholder="Search for books..." />
                             <CommandList></CommandList>
                         </Command>
+                        <Select>
+                            <SelectTrigger className="!h-10">
+                                <SelectValue placeholder="Sort By"></SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="descending">
+                                    <ArrowDownWideNarrow />
+                                    Descending
+                                </SelectItem>
+                                <SelectItem value="ascending">
+                                    <ArrowDownNarrowWide />
+                                    Ascending
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <Button size="lg" className="cursor-pointer">
                         <Plus /> New Book

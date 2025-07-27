@@ -9,13 +9,13 @@ import {
 export function LanguageButton() {
     return (
         <Select>
-        <SelectTrigger>
-            <SelectValue placeholder="Language"></SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-            <SelectItem value="en">English</SelectItem>
-            <SelectItem value="ar">العربية</SelectItem>
-        </SelectContent>
+            <SelectTrigger>
+                <SelectValue placeholder="Language"></SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="en">English</SelectItem>
+                <SelectItem value="ar">العربية</SelectItem>
+            </SelectContent>
         </Select>
     )
 }
