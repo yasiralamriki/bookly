@@ -9,12 +9,12 @@ import { ModeToggle } from '@/components/mode-toggle'
 
 export function Navbar() {
     return (
-        <div id="navbar-container" className="flex justify-between items-center self-stretch px-16 py-4">
-          <div id="logo" className="flex items-center h-8 gap-2">
-            <img src="/src/assets/logo.svg" alt="Bookly Logo" className="h-8 w-8 inline-block" />
+        <div id="navbar-container" className="self-stretch px-16 py-4 flex justify-between items-center overflow-hidden">
+          <div id="logo" className="h-8 inline-flex justify-start items-center gap-2">
+            <img src="/src/assets/logo.svg" alt="Bookly Logo" className="h-8 w-8 inline-block rounded-sm" />
             <span className="text-lg font-semibold">Bookly</span>
           </div>
-          <div id="navbar" className="flex items-center gap-4">
+          <div id="navbar" className="inline-flex justify-start items-center gap-4">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
