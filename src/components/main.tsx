@@ -17,8 +17,8 @@ import {
 
 export function Main() {
     return (
-        <div id="main" className="h-screen px-48 py-32 flex flex-col justify-start items-center gap-8 overflow-hidden">
-            <div id="main-container" className="self-stretch h-full inline-flex flex-col justify-start items-start gap-4">
+        <div id="main" className="h-[calc(100vh-4.5rem)] px-48 py-32 flex flex-col justify-start items-center gap-8 overflow-hidden">
+            <div id="main-container" className="self-stretch flex-1 inline-flex flex-col justify-start items-start gap-4">
                 <div id="control-container" className="self-stretch inline-flex justify-between items-center">
                     <div id="search-container" className="inline-flex justify-start items-center gap-4">
                         <Command className="w-64 h-10  border rounded-md [&>[data-slot=command-input-wrapper]]:border-none">
