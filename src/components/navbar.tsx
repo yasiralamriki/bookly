@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -19,10 +20,14 @@ export function Navbar() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/">Home</NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link to="/">Books</Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/settings">Settings</NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link to="/settings">Settings</Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>

@@ -1,7 +1,9 @@
 import './App.css'
+import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/navbar"
 import { Main } from "@/components/main"
+import Settings from "@/pages/settings/settings"
 
 function App() {
 
@@ -9,7 +11,10 @@ function App() {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Navbar />
-        <Main />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
       </ThemeProvider>
     </>
   )

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowDownNarrowWide, ArrowUpNarrowWide, Trash2 } from "lucide-react";
+import { Plus, ArrowDownAZ , ArrowUpZA , Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import booksData from "@/data/books.json";
@@ -51,13 +51,13 @@ export function Main() {
                                 <SelectValue placeholder="Sort By"></SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="descending" className="cursor-pointer">
-                                    <ArrowDownNarrowWide />
-                                    Descending
-                                </SelectItem>
                                 <SelectItem value="ascending" className="cursor-pointer">
-                                    <ArrowUpNarrowWide />
+                                    <ArrowDownAZ />
                                     Ascending
+                                </SelectItem>
+                                <SelectItem value="descending" className="cursor-pointer">
+                                    <ArrowUpZA />
+                                    Descending
                                 </SelectItem>
                             </SelectContent>
                         </Select>
