@@ -43,6 +43,8 @@
 
 :root {
   --radius: 0.625rem;
+  --button-bg: oklch(0.646 0.222 41.116);
+  --button-hover: oklch(0.6 0.118 184.704);
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -77,6 +79,8 @@
 }
 
 .dark {
+  --button-bg: oklch(0.488 0.243 264.376);
+  --button-hover: oklch(0.627 0.265 303.9);
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
@@ -116,5 +120,38 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Style shadcn/ui Button components by variant */
+  
+  /* Target default buttons and add gradient overlay */
+  button[data-slot="button"].bg-primary,
+  button[data-slot="button"]:not([class*="variant-"]):not(.bg-secondary) {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    isolation: isolate;
+  }
+
+  button[data-slot="button"].bg-primary::before,
+  button[data-slot="button"]:not([class*="variant-"]):not(.bg-secondary)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgb(99 102 241), rgb(168 85 247), rgb(236 72 153));
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  button[data-slot="button"].bg-primary:hover::before,
+  button[data-slot="button"]:not([class*="variant-"]):not(.bg-secondary):hover::before {
+    opacity: 1;
   }
 }
