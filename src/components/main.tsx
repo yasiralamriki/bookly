@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Plus, ArrowDownNarrowWide, ArrowUpNarrowWide, Trash2 } from "lucide-react";
+import { Card } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import booksData from "@/data/books.json";
 import {
   Command,
   CommandInput,
   CommandList,
 } from "@/components/ui/command"
-import { Plus, ArrowDownNarrowWide, ArrowDownWideNarrow, Trash2 } from "lucide-react";
-import { Card } from "@/components/ui/card"
 import {
   Select,
   SelectContent,
@@ -14,32 +16,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ScrollArea } from "@/components/ui/scroll-area"
-
-const initialBooks = [
-  { title: "Kitāb at-Tawhīd", author: "Shaykh Muhammad ibn 'Abd al-Wahhāb" },
-  { title: "Al-'Aqīdah al-Wāsitiyyah", author: "Shaykh al-Islām Ibn Taymiyyah" },
-  { title: "Usūl ath-Thalāthah", author: "Shaykh Muhammad ibn 'Abd al-Wahhāb" },
-  { title: "Al-Qawā'id al-Arba'", author: "Shaykh Muhammad ibn 'Abd al-Wahhāb" },
-  { title: "Sharh as-Sunnah", author: "Imam Al-Barbahārī" },
-  { title: "Al-Ibānah", author: "Shaykh Abū al-Hasan al-Ash'arī" },
-  { title: "'Aqīdah at-Tahāwiyyah", author: "Shaykh Abū Ja'far at-Tahāwī" },
-  { title: "Kashf ash-Shubuhāt", author: "Shaykh Muhammad ibn 'Abd al-Wahhāb" },
-  { title: "Al-'Aqīdah al-Hamawiyyah", author: "Shaykh al-Islām Ibn Taymiyyah" },
-  { title: "Fadl al-Islām", author: "Shaykh Muhammad ibn 'Abd al-Wahhāb" },
-  { title: "Al-Usūl as-Sittah", author: "Shaykh Muhammad ibn 'Abd al-Wahhāb" },
-  { title: "Majmū' al-Fatāwā", author: "Shaykh al-Islām Ibn Taymiyyah" },
-  { title: "Ad-Durar as-Saniyyah", author: "Various Scholars" },
-  { title: "Fath al-Majīd", author: "Shaykh 'Abd ar-Rahmān ibn Hasan" },
-  { title: "Taysīr al-'Azīz al-Hamīd", author: "Shaykh Sulaymān ibn 'Abdullāh" }
-];
 
 export function Main() {
-    const [books, setBooks] = useState(initialBooks);
+    const [books, setBooks] = useState(booksData);
+    const [sortOrder, setSortOrder] = useState("descending");
 
-    const handleDelete = (index: number) => {
-        setBooks(prevBooks => prevBooks.filter((_, i) => i !== index));
-    };
+    function deleteBook(index: number) {
+        setBooks(books.filter((_, i) => i !== index));
+    }
+
+    function handleSortChange(value: string) {
+        setSortOrder(value);
+        const sortedBooks = [...books].sort((a, b) => {
+            if (value === "ascending") {
+                return a.title.localeCompare(b.title);
+            } else {
+                return b.title.localeCompare(a.title);
+            }
+        });
+        setBooks(sortedBooks);
+    }
 
     return (
         <div id="main" className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start items-center gap-8 overflow-hidden">
@@ -50,17 +46,17 @@ export function Main() {
                             <CommandInput placeholder="Search for books..." />
                             <CommandList></CommandList>
                         </Command>
-                        <Select>
-                            <SelectTrigger className="!h-10">
+                        <Select defaultValue="descending" value={sortOrder} onValueChange={handleSortChange}>
+                            <SelectTrigger className="!h-10 cursor-pointer">
                                 <SelectValue placeholder="Sort By"></SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="descending">
-                                    <ArrowDownWideNarrow />
+                                <SelectItem value="descending" className="cursor-pointer">
+                                    <ArrowDownNarrowWide />
                                     Descending
                                 </SelectItem>
-                                <SelectItem value="ascending">
-                                    <ArrowDownNarrowWide />
+                                <SelectItem value="ascending" className="cursor-pointer">
+                                    <ArrowUpNarrowWide />
                                     Ascending
                                 </SelectItem>
                             </SelectContent>
@@ -81,7 +77,7 @@ export function Main() {
                                             <h3 className="font-semibold text-lg text-left">{book.title}</h3>
                                             <p className="text-muted-foreground text-left">{book.author}</p>
                                         </div>
-                                        <Button variant="secondary" size="icon" className="cursor-pointer size-8 hover:bg-red-500 hover:text-white" onClick={() => handleDelete(index)}>
+                                        <Button variant="secondary" size="icon" className="cursor-pointer size-8 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out" onClick={() => deleteBook(index)}>
                                             <Trash2 />
                                         </Button>
                                     </div>
