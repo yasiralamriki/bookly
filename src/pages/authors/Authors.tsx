@@ -1,4 +1,4 @@
-import './Authors.css'
+import '../../app.css'
 
 function Authors() {
 

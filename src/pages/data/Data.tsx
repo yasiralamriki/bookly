@@ -1,4 +1,4 @@
-import './Data.css'
+import '../../app.css'
 
 function Data() {
 

@@ -46,7 +46,7 @@ export function Main() {
                             <CommandInput placeholder="Search for books..." />
                             <CommandList></CommandList>
                         </Command>
-                        <Select defaultValue="descending" value={sortOrder} onValueChange={handleSortChange}>
+                        <Select defaultValue="ascending" value={sortOrder} onValueChange={handleSortChange}>
                             <SelectTrigger className="!h-10 cursor-pointer">
                                 <SelectValue placeholder="Sort By"></SelectValue>
                             </SelectTrigger>
