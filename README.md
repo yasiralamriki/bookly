@@ -1,4 +1,6 @@
-# Bookly
+
+![Bookly Logo](./src/assets/logofull-dark.svg)
+---
 
 > [!WARNING]
 > **Work in Progress**: This project is currently under development. Not all features may be fully implemented or working as expected.
