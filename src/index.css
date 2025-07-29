@@ -124,19 +124,15 @@
 }
 
 @layer components {
-  /* Style shadcn/ui Button components by variant */
-  
-  /* Target default buttons and add gradient overlay */
-  button[data-slot="button"].bg-primary,
-  button[data-slot="button"]:not([class*="variant-"]):not(.bg-secondary) {
+  /* Specific rule for gradient-button class */
+  .gradient-button {
     position: relative;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
     isolation: isolate;
   }
 
-  button[data-slot="button"].bg-primary::before,
-  button[data-slot="button"]:not([class*="variant-"]):not(.bg-secondary)::before {
+  .gradient-button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -150,8 +146,7 @@
     z-index: -1;
   }
 
-  button[data-slot="button"].bg-primary:hover::before,
-  button[data-slot="button"]:not([class*="variant-"]):not(.bg-secondary):hover::before {
+  .gradient-button:hover::before {
     opacity: 1;
   }
 }

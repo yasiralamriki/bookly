@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowDownAZ , ArrowUpZA , Trash2 } from "lucide-react";
+import { ArrowDownAZ , ArrowUpZA , Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import booksData from "@/data/books.json";
@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { NewBook } from "@/components/books/newbook";
 
 export function Books() {
     const [books, setBooks] = useState(booksData);
@@ -62,9 +63,7 @@ export function Books() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <Button size="lg" className="cursor-pointer">
-                        <Plus /> New Book
-                    </Button>
+                    <NewBook />
                 </div>
                 <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
                     <ScrollArea className="flex-1 w-full h-0">
