@@ -17,9 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function Main() {
+export function Books() {
     const [books, setBooks] = useState(booksData);
-    const [sortOrder, setSortOrder] = useState("descending");
+    const [sortOrder, setSortOrder] = useState("ascending");
 
     function deleteBook(index: number) {
         setBooks(books.filter((_, i) => i !== index));

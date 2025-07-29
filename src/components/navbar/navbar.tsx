@@ -6,8 +6,8 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { Separator } from "@/components/ui/separator"
-import { ModeToggle } from '@/components/mode-toggle'
-import { LanguageButton } from "./languagebutton"
+import { ThemeSwitcher } from '@/components/navbar/themeswitcher'
+import { LanguageButton } from "@/components/navbar/languagebutton"
 
 export function Navbar() {
     return (
@@ -42,7 +42,7 @@ export function Navbar() {
               </NavigationMenuList>
             </NavigationMenu>
             <Separator orientation="vertical" className="!h-6" />
-            <ModeToggle />
+            <ThemeSwitcher />
             <LanguageButton />
           </div>
         </div>

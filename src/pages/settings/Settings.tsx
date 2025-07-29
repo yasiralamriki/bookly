@@ -1,4 +1,4 @@
-import './Settings.css'
+import '../../App.css'
 
 function Settings() {
 
