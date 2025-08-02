@@ -37,29 +37,30 @@ router
 
     // Respond with the newly created book
 		res.status(201).json(newBook);
-	});
-
-router
-  .route('/books/:id')
+	})
   .delete((req, res) => {
-    const booksPath = path.join(__dirname, '../data/books.json');
-    const books = JSON.parse(fs.readFileSync(booksPath, 'utf8'));
+    if (req.query.id) {
+      const booksPath = path.join(__dirname, '../data/books.json');
+      const books = JSON.parse(fs.readFileSync(booksPath, 'utf8'));
+
+      const bookId = parseInt(req.query.id, 10);
+      const bookIndex = books.findIndex(book => book.id === bookId);
     
-    const bookId = parseInt(req.params.id, 10);
-    const bookIndex = books.findIndex(book => book.id === bookId);
-    
-    if (bookIndex === -1) {
-      return res.status(404).json({ error: 'Book not found' });
+      if (bookIndex === -1) {
+        return res.status(404).json({ error: 'Book not found' });
+      }
+      
+      // Remove the book from the array
+      const deletedBook = books.splice(bookIndex, 1)[0];
+      
+      // Save the updated books array
+      fs.writeFileSync(booksPath, JSON.stringify(books, null, 2));
+      
+      // Respond with the deleted book
+      res.status(200).json(deletedBook);
+    } else {
+      res.status(400).json({ error: 'Book ID is required for deletion' });
     }
-    
-    // Remove the book from the array
-    const deletedBook = books.splice(bookIndex, 1)[0];
-    
-    // Save the updated books array
-    fs.writeFileSync(booksPath, JSON.stringify(books, null, 2));
-    
-    // Respond with the deleted book
-    res.status(200).json(deletedBook);
   });
 
 export default router;
