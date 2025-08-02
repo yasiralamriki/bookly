@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { NewBookButton } from "@/components/books/newbookbutton";
+import { useTranslation } from "react-i18next";
 
 type Book = {
     id: number;
@@ -30,6 +31,8 @@ export function BooksContainer() {
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const [sortOrder, setSortOrder] = useState("ascending");
     const [searchQuery, setSearchQuery] = useState("");
+
+    const { t, i18n } = useTranslation();
 
     const fetchBooks = () => {
         fetch('/api/books')
@@ -94,7 +97,7 @@ export function BooksContainer() {
                     <div id="search-container" className="inline-flex justify-start items-center gap-4">
                         <Command className="w-64 h-10  border rounded-md [&>[data-slot=command-input-wrapper]]:border-none">
                             <CommandInput 
-                                placeholder="Search for books..." 
+                                placeholder={t("Search for books...")} 
                                 value={searchQuery}
                                 onValueChange={handleSearchChange}
                             />
@@ -107,11 +110,11 @@ export function BooksContainer() {
                             <SelectContent>
                                 <SelectItem value="ascending" className="cursor-pointer">
                                     <ArrowDownAZ />
-                                    Ascending
+                                    {t("Ascending")}
                                 </SelectItem>
                                 <SelectItem value="descending" className="cursor-pointer">
                                     <ArrowUpZA />
-                                    Descending
+                                    {t("Descending")}
                                 </SelectItem>
                             </SelectContent>
                         </Select>
@@ -121,11 +124,11 @@ export function BooksContainer() {
                 <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
                     {filteredBooks.length === 0 ? (
                         <div className="flex-1 flex justify-center items-center">
-                            <Alert variant="destructive" className="text-left max-w-md">
+                            <Alert variant="destructive" className={`text-left max-w-md ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
                                 <CircleAlert className="mx-auto" />
-                                <AlertTitle>No books found</AlertTitle>
+                                <AlertTitle>{t("No books found")}</AlertTitle>
                                 <AlertDescription>
-                                    No books match your search criteria. Please try a different search term or add new books.
+                                    {t("No books match your search criteria. Please try a different search term or add new books.")}
                                 </AlertDescription>
                             </Alert>
                         </div>
@@ -135,9 +138,9 @@ export function BooksContainer() {
                                 {filteredBooks.map((book) => (
                                     <Card key={book.id} className="p-4 border hover:shadow-md transition-shadow cursor-pointer">
                                         <div className="flex justify-between items-start">
-                                            <div className="mr-4">
-                                                <h3 className="font-semibold text-lg text-left">{book.title}</h3>
-                                                <p className="text-muted-foreground text-left">{book.author}</p>
+                                            <div className={`mr-4 ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
+                                                <h3 className="font-semibold text-lg">{book.title}</h3>
+                                                <p className="text-muted-foreground">{book.author}</p>
                                         </div>
                                         <Button 
                                             variant="secondary" 

@@ -8,9 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/components/themeprovider"
+import { useTranslation } from "react-i18next"
 
 export function ThemeSwitcher() {
   const { setTheme } = useTheme()
+
+  const { t, i18n } = useTranslation()
 
   return (
     <DropdownMenu>
@@ -21,15 +24,15 @@ export function ThemeSwitcher() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align={i18n.dir() === 'rtl' ? "start" : "end"}>
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          {t("Light")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          {t("Dark")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          {t("System")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
