@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowDownAZ , ArrowUpZA , Trash2 } from "lucide-react";
+import { ArrowDownAZ , ArrowUpZA , CircleAlert, Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { NewBookButton } from "@/components/books/newbookbutton";
 
 type Book = {
@@ -118,14 +119,25 @@ export function BooksContainer() {
                     <NewBookButton onBookAdded={fetchBooks} />
                 </div>
                 <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
-                    <ScrollArea className="flex-1 w-full h-0">
-                        <div className="flex flex-col justify-start items-stretch gap-4 pr-4">
-                            {filteredBooks.map((book) => (
-                                <Card key={book.id} className="p-4 border hover:shadow-md transition-shadow cursor-pointer">
-                                    <div className="flex justify-between items-start">
-                                        <div className="mr-4">
-                                            <h3 className="font-semibold text-lg text-left">{book.title}</h3>
-                                            <p className="text-muted-foreground text-left">{book.author}</p>
+                    {filteredBooks.length === 0 ? (
+                        <div className="flex-1 flex justify-center items-center">
+                            <Alert variant="destructive" className="text-left max-w-md">
+                                <CircleAlert className="mx-auto" />
+                                <AlertTitle>No books found</AlertTitle>
+                                <AlertDescription>
+                                    No books match your search criteria. Please try a different search term or add new books.
+                                </AlertDescription>
+                            </Alert>
+                        </div>
+                    ) : (
+                        <ScrollArea className="flex-1 w-full h-0">
+                            <div className="flex flex-col justify-start items-stretch gap-4 pr-4">
+                                {filteredBooks.map((book) => (
+                                    <Card key={book.id} className="p-4 border hover:shadow-md transition-shadow cursor-pointer">
+                                        <div className="flex justify-between items-start">
+                                            <div className="mr-4">
+                                                <h3 className="font-semibold text-lg text-left">{book.title}</h3>
+                                                <p className="text-muted-foreground text-left">{book.author}</p>
                                         </div>
                                         <Button 
                                             variant="secondary" 
@@ -137,9 +149,10 @@ export function BooksContainer() {
                                         </Button>
                                     </div>
                                 </Card>
-                            ))}
-                        </div>
-                    </ScrollArea>
+                                ))}
+                            </div>
+                        </ScrollArea>
+                    )}
                 </Card>
             </div>
         </div>
