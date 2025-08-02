@@ -18,7 +18,7 @@ interface NewBookProps {
   onBookAdded?: () => void;
 }
 
-export function NewBook({ onBookAdded }: NewBookProps) {
+export function NewBookButton({ onBookAdded }: NewBookProps) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [isOpen, setIsOpen] = useState(false);

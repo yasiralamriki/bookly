@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Separator } from "@/components/ui/separator"
 import { ThemeSwitcher } from '@/components/navbar/themeswitcher'
-import { LanguageButton } from "@/components/navbar/languagebutton"
+import { LanguageSwitcher } from "@/components/navbar/languageswitcher"
 
 export function Navbar() {
     return (
@@ -43,7 +43,7 @@ export function Navbar() {
             </NavigationMenu>
             <Separator orientation="vertical" className="!h-6" />
             <ThemeSwitcher />
-            <LanguageButton />
+            <LanguageSwitcher />
           </div>
         </div>
     )

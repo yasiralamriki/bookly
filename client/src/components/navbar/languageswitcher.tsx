@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function LanguageButton() {
+export function LanguageSwitcher() {
     return (
         <Select>
             <SelectTrigger>

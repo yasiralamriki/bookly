@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { NewBook } from "@/components/books/newbook";
+import { NewBookButton } from "@/components/books/newbookbutton";
 
 type Book = {
     id: number;
@@ -24,7 +24,7 @@ type Book = {
     // add other fields if needed
 };
 
-export function Books() {
+export function BooksContainer() {
     const [books, setBooks] = useState<Book[]>([]);
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const [sortOrder, setSortOrder] = useState("ascending");
@@ -72,7 +72,7 @@ export function Books() {
 
     const handleDeleteBook = async (bookId: number) => {
         try {
-            const response = await fetch(`/api/books/${bookId}`, {
+            const response = await fetch(`/api/books/?id=${bookId}`, {
                 method: 'DELETE'
             });
             
@@ -115,7 +115,7 @@ export function Books() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <NewBook onBookAdded={fetchBooks} />
+                    <NewBookButton onBookAdded={fetchBooks} />
                 </div>
                 <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
                     <ScrollArea className="flex-1 w-full h-0">
