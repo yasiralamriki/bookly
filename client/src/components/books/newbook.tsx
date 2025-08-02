@@ -12,11 +12,51 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react";
-import { createBook } from "@/lib/books"
+import { useState } from "react";
 
-export function NewBook() {
+interface NewBookProps {
+  onBookAdded?: () => void;
+}
+
+export function NewBook({ onBookAdded }: NewBookProps) {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleAddBook = async () => {
+    if (!title.trim() || !author.trim()) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/books", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: title.trim(),
+          author: author.trim()
+        })
+      });
+
+      if (response.ok) {
+        // Clear form
+        setTitle("");
+        setAuthor("");
+        setIsOpen(false);
+        
+        // Refresh the books list
+        if (onBookAdded) {
+          onBookAdded();
+        }
+      }
+    } catch (error) {
+      console.error('Error adding book:', error);
+    }
+  };
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <Button size="lg" className="cursor-pointer gradient-button">
             <Plus /> New Book
@@ -28,15 +68,33 @@ export function NewBook() {
         </AlertDialogHeader>
         <div className="grid w-full items-center gap-3">
             <Label htmlFor="book-name">Book Name</Label>
-            <Input type="text" id="book-name" placeholder="Kitāb at-Tawhīd" />
+            <Input 
+              type="text" 
+              id="book-name" 
+              placeholder="Kitāb at-Tawhīd"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
         </div>
         <div className="grid w-full items-center gap-3">
             <Label htmlFor="author-name">Author Name</Label>
-            <Input type="text" id="author-name" placeholder="Shaykh Muhammad ibn 'Abd al-Wahhāb" />
+            <Input 
+              type="text" 
+              id="author-name" 
+              placeholder="Shaykh Muhammad ibn 'Abd al-Wahhāb"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
         </div>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="cursor-pointer gradient-button" onClick={() => createBook("Kitāb at-Tawhīd", "Shaykh Muhammad ibn 'Abd al-Wahhāb")}>Continue</AlertDialogAction>
+          <AlertDialogAction 
+            className="cursor-pointer gradient-button" 
+            onClick={handleAddBook}
+            disabled={!title.trim() || !author.trim()}
+          >
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
