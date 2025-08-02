@@ -1,0 +1,18 @@
+{
+  "name": "bookly-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cd server && pnpm dev",
+    "build": "cd client && pnpm build",
+    "start": "cd server && pnpm start",
+    "install:all": "cd client && pnpm install && cd ../server && pnpm install",
+    "build:production": "cd client && pnpm build && cd ../server && pnpm start"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "packageManager": "pnpm@10.12.3"
+}
