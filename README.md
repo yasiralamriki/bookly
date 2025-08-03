@@ -23,7 +23,10 @@
 
 ---
 
-> [!WARNING]
+> WARNING  
+> Critical content demanding immediate user attention due to potential risks.
+
+> WARNING
 > **Work in Progress**: This project is currently under development. Not all features may be fully implemented or working as expected.
 
 Bookly is a modern full-stack web application for managing and browsing your book collection. Built with React, TypeScript, Express.js, and Vite, it features a clean UI with shadcn/ui components, sorting, searching, and comprehensive book management capabilities.
@@ -183,7 +186,7 @@ MIT
 
 ---
 
-> [!WARNING]  
+> تحذير  
 > **عمل قيد التطوير**: هذا المشروع قيد التطوير حالياً. قد لا تكون جميع الميزات مُنفذة بالكامل أو تعمل كما هو متوقع.
 
 بوكلي هو تطبيق ويب حديث متكامل لإدارة وتصفح مجموعة كتبك. مبني باستخدام React و TypeScript و Express.js و Vite، ويتميز بواجهة مستخدم نظيفة مع مكونات shadcn/ui، والفرز والبحث وإمكانيات إدارة الكتب الشاملة.
