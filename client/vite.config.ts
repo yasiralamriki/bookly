@@ -18,8 +18,7 @@ export default defineConfig({
     outDir: 'dist',
   },
   server: {
-    hmr: {
-      port: 24678,
-    },
+    // Remove the custom HMR port - let Vite handle it automatically
+    host: true,
   },
 })

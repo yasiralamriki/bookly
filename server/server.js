@@ -24,8 +24,8 @@ ViteExpress.config({
 	viteConfigFile: resolve(__dirname, '../client/vite.config.ts'),
 	inlineViteConfig: {
 		root: resolve(__dirname, '../client'),
-		build: {
-			outDir: resolve(__dirname, '../client/dist'),
+		server: {
+			middlewareMode: true,
 		},
 	},
 });
