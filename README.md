@@ -8,6 +8,8 @@
 
 [![English](https://img.shields.io/badge/English-6366f1?style=for-the-badge)](#english-tab) [![Arabic](https://img.shields.io/badge/Arabic-a855f7?style=for-the-badge)](#arabic-tab)
 
+(The Arabic language is translated with AI and I haven't checked it)
+
 </div>
 
 ---
