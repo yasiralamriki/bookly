@@ -16,6 +16,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { NewBookButton } from "@/components/books/newbookbutton";
 import { useTranslation } from "react-i18next";
 
@@ -142,14 +153,29 @@ export function BooksContainer() {
                                                 <h3 className="font-semibold text-lg">{book.title}</h3>
                                                 <p className="text-muted-foreground">{book.author}</p>
                                         </div>
-                                        <Button 
-                                            variant="secondary" 
-                                            size="icon" 
-                                            className="cursor-pointer size-8 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out" 
-                                            onClick={() => handleDeleteBook(book.id)}
-                                        >
-                                            <Trash2 />
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button 
+                                                    variant="secondary" 
+                                                    size="icon" 
+                                                    className="cursor-pointer size-8 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out" 
+                                                >
+                                                <Trash2 />
                                         </Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>{t("Are you absolutely sure?")}</AlertDialogTitle>
+                                                    <AlertDialogDescription className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
+                                                        {t("This action cannot be undone. This will permanently delete your account and remove your data from our servers.")}
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel className="cursor-pointer">{t("Cancel")}</AlertDialogCancel>
+                                                    <AlertDialogAction className="gradient-button cursor-pointer" onClick={() => handleDeleteBook(book.id)}>{t("Continue")}</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
                                     </div>
                                 </Card>
                                 ))}
