@@ -71,3 +71,6 @@ yarn.lock
 
 # Miscellaneous
 *.tsbuildinfo
+
+# Configuration files
+config.json

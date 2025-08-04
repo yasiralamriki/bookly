@@ -1,7 +1,11 @@
+// Import necessary modules
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// Import local modules
+import { Book } from '../lib/books.js';
+import { getConfigFile } from '../lib/config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,53 +15,49 @@ const router = express.Router();
 router
 	.route('/books')
 	.get((req, res) => {
-    const booksPath = path.join(__dirname, '../data/books.json');
-    const books = JSON.parse(fs.readFileSync(booksPath, 'utf8'));
+    try {
+      const books = getConfigFile(path.join(__dirname, '../data/books.json'));
 
-    if (req.query.id) {
-      return res.status(200).json(books.find(book => book.id === parseInt(req.query.id, 10)));
-    } else {
-      return res.status(200).json(books);
+      if (req.query.id) {
+        return res.status(200).json(books.find(book => book.id === parseInt(req.query.id, 10)));
+      } else {
+        return res.status(200).json(books);
+      }
+
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
 	})
 	.post((req, res) => {
-    const booksPath = path.join(__dirname, '../data/books.json');
-    const books = JSON.parse(fs.readFileSync(booksPath, 'utf8'));
+    try {
+      const books = getConfigFile(path.join(__dirname, '../data/books.json'));
+      
+      // Find the highest existing ID and increment it
+      const maxId = books.length > 0 ? Math.max(...books.map(book => book.id)) : 0;
+      const newBook = new Book(maxId + 1, req.body.title, req.body.author);
 
-    // Create a new book
-		const newBook = {
-      id: books.length > 0 ? Math.max(...books.map(book => book.id)) + 1 : 1,
-      title: req.body.title,
-      author: req.body.author
-    };
+      books.push(newBook);
+      fs.writeFileSync(path.join(__dirname, '../data/books.json'), JSON.stringify(books, null, 2));
 
-    // Add the new book to the books array and save it
-		books.push(newBook);
-    fs.writeFileSync(booksPath, JSON.stringify(books, null, 2));
-
-    // Respond with the newly created book
-		res.status(201).json(newBook);
+      res.status(201).json(newBook);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
 	})
   .delete((req, res) => {
     if (req.query.id) {
-      const booksPath = path.join(__dirname, '../data/books.json');
-      const books = JSON.parse(fs.readFileSync(booksPath, 'utf8'));
-
+      const books = getConfigFile(path.join(__dirname, '../data/books.json'));
       const bookId = parseInt(req.query.id, 10);
       const bookIndex = books.findIndex(book => book.id === bookId);
-    
-      if (bookIndex === -1) {
+
+      if (bookIndex <= -1) {
         return res.status(404).json({ error: 'Book not found' });
+      } else {
+        const deletedBook = books.splice(bookIndex, 1)[0];
+
+        fs.writeFileSync(path.join(__dirname, '../data/books.json'), JSON.stringify(books, null, 2));
+        return res.status(200).json(deletedBook);
       }
-      
-      // Remove the book from the array
-      const deletedBook = books.splice(bookIndex, 1)[0];
-      
-      // Save the updated books array
-      fs.writeFileSync(booksPath, JSON.stringify(books, null, 2));
-      
-      // Respond with the deleted book
-      res.status(200).json(deletedBook);
     } else {
       res.status(400).json({ error: 'Book ID is required for deletion' });
     }
