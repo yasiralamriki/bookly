@@ -73,4 +73,4 @@ yarn.lock
 *.tsbuildinfo
 
 # Configuration files
-config.json
+server/data/books.json

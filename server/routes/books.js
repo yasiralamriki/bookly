@@ -15,34 +15,30 @@ const router = express.Router();
 router
 	.route('/books')
 	.get((req, res) => {
-    try {
-      const books = getConfigFile(path.join(__dirname, '../data/books.json'));
+    const books = getConfigFile(path.join(__dirname, '../data/books.json'));
 
-      if (req.query.id) {
-        return res.status(200).json(books.find(book => book.id === parseInt(req.query.id, 10)));
+    if (req.query.id) {
+      const book = books.find(book => book.id === parseInt(req.query.id, 10));
+      if (book) {
+        return res.status(200).json(book);
       } else {
-        return res.status(200).json(books);
+        return res.status(404).json({ error: 'Book not found' });
       }
-
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
+    } else {
+      return res.status(200).json(books);
     }
 	})
 	.post((req, res) => {
-    try {
-      const books = getConfigFile(path.join(__dirname, '../data/books.json'));
-      
-      // Find the highest existing ID and increment it
-      const maxId = books.length > 0 ? Math.max(...books.map(book => book.id)) : 0;
-      const newBook = new Book(maxId + 1, req.body.title, req.body.author);
+    const books = getConfigFile(path.join(__dirname, '../data/books.json'));
+    
+    // Find the highest existing ID and increment it
+    const maxId = books.length > 0 ? Math.max(...books.map(book => book.id)) : 0;
+    const newBook = new Book(maxId + 1, req.body.title, req.body.author);
 
-      books.push(newBook);
-      fs.writeFileSync(path.join(__dirname, '../data/books.json'), JSON.stringify(books, null, 2));
+    books.push(newBook);
+    fs.writeFileSync(path.join(__dirname, '../data/books.json'), JSON.stringify(books, null, 2));
 
-      res.status(201).json(newBook);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+    res.status(201).json(newBook);
 	})
   .delete((req, res) => {
     if (req.query.id) {
@@ -50,7 +46,7 @@ router
       const bookId = parseInt(req.query.id, 10);
       const bookIndex = books.findIndex(book => book.id === bookId);
 
-      if (bookIndex <= -1) {
+      if (bookIndex === -1) {
         return res.status(404).json({ error: 'Book not found' });
       } else {
         const deletedBook = books.splice(bookIndex, 1)[0];
