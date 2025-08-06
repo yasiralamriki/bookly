@@ -5,9 +5,6 @@
 
 ---
 
-> WARNING  
-> Critical content demanding immediate user attention due to potential risks.
-
 > WARNING
 > **Work in Progress**: This project is currently under development. Not all features may be fully implemented or working as expected.
 
