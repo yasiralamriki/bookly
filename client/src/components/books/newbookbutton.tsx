@@ -62,15 +62,15 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <Button size="lg" className="cursor-pointer gradient-button">
-            <Plus /> {t("New Book")}
+            <Plus /> {t("new_book")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className={`${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>{t("Create a new book")}</AlertDialogTitle>
+          <AlertDialogTitle className={`${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>{t("create_book")}</AlertDialogTitle>
         </AlertDialogHeader>
         <div className="grid w-full items-center gap-3">
-            <Label htmlFor="book-name">{t("Book Name")}</Label>
+            <Label htmlFor="book-name">{t("book_name")}</Label>
             <Input 
               type="text" 
               id="book-name" 
@@ -79,7 +79,7 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
             />
         </div>
         <div className="grid w-full items-center gap-3">
-            <Label htmlFor="author-name">{t("Author Name")}</Label>
+            <Label htmlFor="author-name">{t("author_name")}</Label>
             <Input 
               type="text" 
               id="author-name" 
@@ -89,13 +89,13 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
             />
         </div>
         <AlertDialogFooter>
-          <AlertDialogCancel className="cursor-pointer">{t("Cancel")}</AlertDialogCancel>
+          <AlertDialogCancel className="cursor-pointer">{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction 
             className="cursor-pointer gradient-button" 
             onClick={handleAddBook}
             disabled={!title.trim() || !author.trim()}
           >
-            {t("Continue")}
+            {t("continue")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

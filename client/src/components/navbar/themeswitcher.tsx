@@ -29,13 +29,13 @@ export function ThemeSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align={i18n.dir() === 'rtl' ? "start" : "end"}>
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          {t("Light")}
+          {t("light")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          {t("Dark")}
+          {t("dark")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          {t("System")}
+          {t("system")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

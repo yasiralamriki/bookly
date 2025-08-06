@@ -37,10 +37,10 @@ export function LanguageSwitcher() {
             </SelectTrigger>
             <SelectContent>
                 <SelectItem value="en">
-                    {t('English')}
+                    {t('english')}
                 </SelectItem>
                 <SelectItem value="ar">
-                    {t('Arabic')}
+                    {t('arabic')}
                 </SelectItem>
             </SelectContent>
         </Select>

@@ -108,7 +108,7 @@ export function BooksContainer() {
                     <div id="search-container" className="inline-flex justify-start items-center gap-4">
                         <Command className="w-64 h-10  border rounded-md [&>[data-slot=command-input-wrapper]]:border-none">
                             <CommandInput 
-                                placeholder={t("Search for books...")} 
+                                placeholder={t("search_for_books")} 
                                 value={searchQuery}
                                 onValueChange={handleSearchChange}
                             />
@@ -121,11 +121,11 @@ export function BooksContainer() {
                             <SelectContent>
                                 <SelectItem value="ascending" className="cursor-pointer">
                                     <ArrowDownAZ />
-                                    {t("Ascending")}
+                                    {t("ascending")}
                                 </SelectItem>
                                 <SelectItem value="descending" className="cursor-pointer">
                                     <ArrowUpZA />
-                                    {t("Descending")}
+                                    {t("descending")}
                                 </SelectItem>
                             </SelectContent>
                         </Select>
@@ -137,9 +137,9 @@ export function BooksContainer() {
                         <div className="flex-1 flex justify-center items-center">
                             <Alert variant="destructive" className={`text-left max-w-md ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
                                 <CircleAlert className="mx-auto" />
-                                <AlertTitle>{t("No books found")}</AlertTitle>
+                                <AlertTitle>{t("no_books_found")}</AlertTitle>
                                 <AlertDescription>
-                                    {t("No books match your search criteria. Please try a different search term or add new books.")}
+                                    {t("no_books_match_criteria")}
                                 </AlertDescription>
                             </Alert>
                         </div>
@@ -165,14 +165,14 @@ export function BooksContainer() {
                                             </AlertDialogTrigger>
                                             <AlertDialogContent>
                                                 <AlertDialogHeader>
-                                                    <AlertDialogTitle className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>{t("Are you absolutely sure?")}</AlertDialogTitle>
+                                                    <AlertDialogTitle className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>{t("deletion_confirmation_heading")}</AlertDialogTitle>
                                                     <AlertDialogDescription className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
-                                                        {t("This action cannot be undone. This will permanently delete your account and remove your data from our servers.")}
+                                                        {t("deletion_confirmation_description")}
                                                     </AlertDialogDescription>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
-                                                    <AlertDialogCancel className="cursor-pointer">{t("Cancel")}</AlertDialogCancel>
-                                                    <AlertDialogAction className="gradient-button cursor-pointer" onClick={() => handleDeleteBook(book.id)}>{t("Continue")}</AlertDialogAction>
+                                                    <AlertDialogCancel className="cursor-pointer">{t("cancel")}</AlertDialogCancel>
+                                                    <AlertDialogAction className="gradient-button cursor-pointer" onClick={() => handleDeleteBook(book.id)}>{t("continue")}</AlertDialogAction>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>

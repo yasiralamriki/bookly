@@ -24,22 +24,22 @@ export function Navbar() {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/">{t('Books')}</Link>
+                    <Link to="/">{t('books')}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/authors">{t('Authors')}</Link>
+                    <Link to="/authors">{t('authors')}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/data">{t('Data')}</Link>
+                    <Link to="/data">{t('data')}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/settings">{t('Settings')}</Link>
+                    <Link to="/settings">{t('settings')}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
