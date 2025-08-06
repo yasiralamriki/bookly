@@ -4,8 +4,8 @@ import { ThemeProvider } from "@/components/themeprovider"
 import { Navbar } from "@/components/navbar/navbar"
 import { BooksContainer } from "@/components/books/bookscontainer"
 import Settings from "@/pages/settings/Settings"
-import Authors from './pages/authors/Authors'
-import Data from './pages/data/Data'
+import Authors from '@/pages/authors/Authors'
+import Data from '@/pages/data/Data'
 import { DirectionProvider } from '@radix-ui/react-direction'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
