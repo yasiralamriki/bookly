@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowDownAZ , ArrowUpZA , CircleAlert, Trash2, UserRound } from "lucide-react";
+import { ArrowDownAZ , ArrowUpZA , CircleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -16,19 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import { NewBookButton } from "@/components/books/newbookbutton";
 import { useTranslation } from "react-i18next";
+import { BookCard } from "./bookcard";
 
 type Book = {
     id: number;
@@ -147,40 +136,13 @@ export function BooksContainer() {
                         <ScrollArea className="flex-1 w-full h-0">
                             <div className="flex flex-col justify-start items-stretch gap-4 pr-4">
                                 {filteredBooks.map((book) => (
-                                    <Card key={book.id} className="p-4 border hover:shadow-md transition-shadow cursor-pointer">
-                                        <div className="flex justify-between items-start">
-                                            <div className={`mr-4 ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
-                                                <h3 className="font-semibold text-lg">{book.title}</h3>
-                                                <div className="flex items-center text-center gap-1">
-                                                    <UserRound size={16} className="flex-shrink-0" />
-                                                    <p className="text-sm font-normal text-muted-foreground">{book.author}</p>
-                                                </div>
-                                            </div>
-                                                                                    <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button 
-                                                    variant="secondary" 
-                                                    size="icon" 
-                                                    className="cursor-pointer size-8 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out" 
-                                                >
-                                                    <Trash2 />
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>{t("deletion_confirmation_heading")}</AlertDialogTitle>
-                                                    <AlertDialogDescription className={`${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
-                                                        {t("deletion_confirmation_description")}
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel className="cursor-pointer">{t("cancel")}</AlertDialogCancel>
-                                                    <AlertDialogAction className="gradient-button cursor-pointer" onClick={() => handleDeleteBook(book.id)}>{t("continue")}</AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                        </div>
-                                    </Card>
+                                    <BookCard 
+                                        key={book.id}
+                                        id={book.id} 
+                                        title={book.title} 
+                                        author={book.author} 
+                                        onDelete={handleDeleteBook} 
+                                    />
                                 ))}
                             </div>
                         </ScrollArea>
