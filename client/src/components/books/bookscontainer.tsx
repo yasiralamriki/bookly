@@ -1,23 +1,13 @@
 import { useEffect, useState } from "react";
-import { ArrowDownAZ , ArrowUpZA , CircleAlert } from "lucide-react";
+import { CircleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import {
-  Command,
-  CommandInput,
-  CommandList,
-} from "@/components/ui/command"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { NewBookButton } from "@/components/books/newbookbutton";
+import { BookSearchBar } from "@/components/books/booksearchbar";
+import { BooksFilter } from "@/components/books/booksfilter";
+import { BookCard } from "@/components/books/bookcard";
 import { useTranslation } from "react-i18next";
-import { BookCard } from "./bookcard";
 
 type Book = {
     id: number;
@@ -26,13 +16,25 @@ type Book = {
     // add other fields if needed
 };
 
+function NoBooksAlert() {
+    const { t, i18n } = useTranslation();
+
+    return (
+        <div className="flex-1 flex justify-center items-center">
+            <Alert variant="destructive" className={`text-left max-w-md ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
+                <CircleAlert className="mx-auto" />
+                <AlertTitle>{t("no_books_found")}</AlertTitle>
+                <AlertDescription>{t("no_books_match_criteria")}</AlertDescription>
+            </Alert>
+        </div>
+    );
+}
+
 export function BooksContainer() {
     const [books, setBooks] = useState<Book[]>([]);
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const [sortOrder, setSortOrder] = useState("ascending");
     const [searchQuery, setSearchQuery] = useState("");
-
-    const { t, i18n } = useTranslation();
 
     const fetchBooks = () => {
         fetch('/api/books')
@@ -95,41 +97,20 @@ export function BooksContainer() {
             <div id="main-container" className="self-stretch flex-1 inline-flex flex-col justify-start items-start gap-4 min-h-0">
                 <div id="control-container" className="self-stretch inline-flex justify-between items-center">
                     <div id="search-container" className="inline-flex justify-start items-center gap-4">
-                        <Command className="w-64 h-10  border rounded-md [&>[data-slot=command-input-wrapper]]:border-none">
-                            <CommandInput 
-                                placeholder={t("search_for_books")} 
-                                value={searchQuery}
-                                onValueChange={handleSearchChange}
-                            />
-                            <CommandList></CommandList>
-                        </Command>
-                        <Select defaultValue="ascending" value={sortOrder} onValueChange={handleSortChange}>
-                            <SelectTrigger className="!h-10 cursor-pointer">
-                                <SelectValue placeholder="Sort By"></SelectValue>
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="ascending" className="cursor-pointer">
-                                    <ArrowDownAZ />
-                                    {t("ascending")}
-                                </SelectItem>
-                                <SelectItem value="descending" className="cursor-pointer">
-                                    <ArrowUpZA />
-                                    {t("descending")}
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
+                        <BookSearchBar 
+                            searchQuery={searchQuery} 
+                            handleSearchChange={handleSearchChange} 
+                        />
+                        <BooksFilter 
+                            sortOrder={sortOrder} 
+                            handleSortChange={handleSortChange} 
+                        />
                     </div>
                     <NewBookButton onBookAdded={fetchBooks} />
                 </div>
                 <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
                     {filteredBooks.length === 0 ? (
-                        <div className="flex-1 flex justify-center items-center">
-                            <Alert variant="destructive" className={`text-left max-w-md ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
-                                <CircleAlert className="mx-auto" />
-                                <AlertTitle>{t("no_books_found")}</AlertTitle>
-                                <AlertDescription>{t("no_books_match_criteria")}</AlertDescription>
-                            </Alert>
-                        </div>
+                        <NoBooksAlert />
                     ) : (
                         <ScrollArea className="flex-1 w-full h-0">
                             <div className="flex flex-col justify-start items-stretch gap-4 pr-4">
