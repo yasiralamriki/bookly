@@ -127,9 +127,7 @@ export function BooksContainer() {
                             <Alert variant="destructive" className={`text-left max-w-md ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
                                 <CircleAlert className="mx-auto" />
                                 <AlertTitle>{t("no_books_found")}</AlertTitle>
-                                <AlertDescription>
-                                    {t("no_books_match_criteria")}
-                                </AlertDescription>
+                                <AlertDescription>{t("no_books_match_criteria")}</AlertDescription>
                             </Alert>
                         </div>
                     ) : (
