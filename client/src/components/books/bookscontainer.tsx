@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowDownAZ , ArrowUpZA , CircleAlert, Trash2 } from "lucide-react";
+import { ArrowDownAZ , ArrowUpZA , CircleAlert, Trash2, UserRound } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -151,17 +151,20 @@ export function BooksContainer() {
                                         <div className="flex justify-between items-start">
                                             <div className={`mr-4 ${i18n.dir(i18n.language) === "rtl" ? "text-right" : "text-left"}`}>
                                                 <h3 className="font-semibold text-lg">{book.title}</h3>
-                                                <p className="text-muted-foreground">{book.author}</p>
-                                        </div>
-                                        <AlertDialog>
+                                                <div className="flex items-center text-center gap-1">
+                                                    <UserRound size={16} className="flex-shrink-0" />
+                                                    <p className="text-sm font-normal text-muted-foreground">{book.author}</p>
+                                                </div>
+                                            </div>
+                                                                                    <AlertDialog>
                                             <AlertDialogTrigger asChild>
                                                 <Button 
                                                     variant="secondary" 
                                                     size="icon" 
                                                     className="cursor-pointer size-8 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out" 
                                                 >
-                                                <Trash2 />
-                                        </Button>
+                                                    <Trash2 />
+                                                </Button>
                                             </AlertDialogTrigger>
                                             <AlertDialogContent>
                                                 <AlertDialogHeader>
@@ -176,8 +179,8 @@ export function BooksContainer() {
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>
-                                    </div>
-                                </Card>
+                                        </div>
+                                    </Card>
                                 ))}
                             </div>
                         </ScrollArea>
