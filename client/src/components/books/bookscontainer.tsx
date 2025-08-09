@@ -53,8 +53,8 @@ export function BooksContainer() {
     useEffect(() => {
         // Filter and sort books when search query or sort order changes
         const filtered = books.filter(book => 
-            book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            book.author.toLowerCase().includes(searchQuery.toLowerCase())
+            book.title.localeCompare(searchQuery, undefined, { sensitivity: 'base' }) ||
+            book.author.localeCompare(searchQuery, undefined, { sensitivity: 'base' })
         );
 
         const sorted = [...filtered].sort((a, b) => {
