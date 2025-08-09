@@ -6,6 +6,7 @@ import { BooksContainer } from "@/components/books/bookscontainer"
 import Settings from "@/pages/settings/Settings"
 import Authors from '@/pages/authors/Authors'
 import Data from '@/pages/data/Data'
+import BookPage from "@/pages/book/BookPage"
 import { DirectionProvider } from '@radix-ui/react-direction'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
@@ -34,6 +35,7 @@ function App() {
             <Route path="/authors" element={<Authors />} />
             <Route path="/data" element={<Data />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="books/:bookId" element={<BookPage />} />
           </Routes>
         </ThemeProvider>
       </DirectionProvider>

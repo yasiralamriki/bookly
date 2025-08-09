@@ -14,6 +14,7 @@ import { Card } from "@/components/ui/card"
 import { BookCopy, Trash2, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 function BookCardTitle({ title }: { title: string }) {
 	return (
@@ -132,13 +133,15 @@ export function BookCard({ id, title, author, onDelete, onBookAdded }: {
     const { i18n } = useTranslation();
 
 	return (
-		<Card key={id} className="p-4 border hover:shadow-md transition-shadow cursor-pointer">
+		<Card key={id} className="p-4 border hover:shadow-md transition-shadow">
 			<div className="flex justify-between items-start">
-				<div className={`mr-4 ${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
-					<BookCardTitle title={title} />
-					<BookCardAuthor author={author} />
-				</div>
-				<div className="flex gap-2">
+				<Link to={`/books/${id}`} className="flex-1 cursor-pointer">
+					<div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
+						<BookCardTitle title={title} />
+						<BookCardAuthor author={author} />
+					</div>
+				</Link>
+				<div className="flex gap-2 ml-4">
 					<BookCardDuplicateButton title={title} author={author} id={id} onBookAdded={onBookAdded} />
 					<BookCardDeleteDialog id={id} onDelete={onDelete} />
 				</div>
