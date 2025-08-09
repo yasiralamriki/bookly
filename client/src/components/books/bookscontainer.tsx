@@ -52,16 +52,30 @@ export function BooksContainer() {
 
     useEffect(() => {
         // Filter and sort books when search query or sort order changes
-        const filtered = books.filter(book => 
-            book.title.localeCompare(searchQuery, undefined, { sensitivity: 'base' }) ||
-            book.author.localeCompare(searchQuery, undefined, { sensitivity: 'base' })
-        );
+        const filtered = books.filter(book => {
+            // If search query is empty, show all books
+            if (!searchQuery.trim()) return true;
+            
+            // Helper function to check if text contains search query using localeCompare base sensitivity
+            const containsQuery = (text: string, query: string): boolean => {
+                // Check if any part of the text matches the query using localeCompare
+                for (let i = 0; i <= text.length - query.length; i++) {
+                    const substring = text.substring(i, i + query.length);
+                    if (substring.localeCompare(query, undefined, { sensitivity: 'base' }) === 0) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            
+            return containsQuery(book.title, searchQuery) || containsQuery(book.author, searchQuery);
+        });
 
         const sorted = [...filtered].sort((a, b) => {
             if (sortOrder === "ascending") {
-                return a.title.localeCompare(b.title);
+                return a.title.localeCompare(b.title, undefined, { usage: "sort", sensitivity: 'base' });
             } else {
-                return b.title.localeCompare(a.title);
+                return b.title.localeCompare(a.title, undefined, { usage: "sort", sensitivity: 'base' });
             }
         });
 
