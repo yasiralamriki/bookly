@@ -32,14 +32,14 @@ export function LanguageSwitcher() {
 
     return (
         <Select defaultValue={getBrowserLanguage()} onValueChange={handleLanguageChange}>
-            <SelectTrigger>
+            <SelectTrigger className="cursor-pointer">
                 <SelectValue placeholder="Language"></SelectValue>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="en">
+                <SelectItem value="en" className="cursor-pointer">
                     {t('english')}
                 </SelectItem>
-                <SelectItem value="ar">
+                <SelectItem value="ar" className="cursor-pointer">
                     {t('arabic')}
                 </SelectItem>
             </SelectContent>
