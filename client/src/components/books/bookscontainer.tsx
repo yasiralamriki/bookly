@@ -135,6 +135,7 @@ export function BooksContainer() {
                                         title={book.title} 
                                         author={book.author} 
                                         onDelete={handleDeleteBook} 
+                                        onBookAdded={fetchBooks}
                                     />
                                 ))}
                             </div>

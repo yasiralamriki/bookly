@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
-import { Trash2, UserRound } from "lucide-react";
+import { BookCopy, Trash2, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 
 function BookCardTitle({ title }: { title: string }) {
 	return (
@@ -27,6 +27,62 @@ function BookCardAuthor({ author }: { author: string }) {
 			<UserRound size={16} className="flex-shrink-0" />
 			<p className="text-sm font-normal text-muted-foreground"> {author} </p>
 		</div>
+	)
+}
+
+interface BookCardDuplicateButtonProps {
+	title: string;
+	author: string;
+	id: number;
+	onBookAdded?: () => void;
+}
+
+function BookCardDuplicateButton({ title, author, id, onBookAdded }: BookCardDuplicateButtonProps) {
+	const [newTitle, setTitle] = useState(title);
+	const [newAuthor, setAuthor] = useState(author);
+
+	const handleDuplicateBook = async () => {
+		if (!newTitle.trim() || !newAuthor.trim()) {
+			return;
+		}
+
+		try {
+			const response = await fetch("/api/books", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					title: newTitle.trim(),
+					author: newAuthor.trim(),
+					id: id + 1
+				})
+			});
+
+			if (response.ok) {
+				// Clear form
+				setTitle("");
+				setAuthor("");
+
+				// Refresh the books list
+				if (onBookAdded) {
+					onBookAdded();
+				}
+			}
+		} catch (error) {
+			console.error('Error adding book:', error);
+		}
+	};
+
+	return (
+		<Button
+			variant="secondary"
+			size="icon"
+			className={`cursor-pointer size-8 dark:hover:bg-zinc-50 dark:hover:text-black hover:bg-zinc-950 hover:text-white transition duration-300 ease-in-out`}
+			onClick={handleDuplicateBook}
+		>
+			<BookCopy />
+		</Button>
 	)
 }
 
@@ -66,7 +122,13 @@ function BookCardDeleteDialog({ id, onDelete }: { id: number, onDelete: (id: num
 	)
 }
 
-export function BookCard({ id, title, author, onDelete }: { id: number, title: string, author: string, onDelete: (id: number) => void }) {
+export function BookCard({ id, title, author, onDelete, onBookAdded }: { 
+    id: number, 
+    title: string, 
+    author: string, 
+    onDelete: (id: number) => void,
+    onBookAdded?: () => void 
+}) {
     const { i18n } = useTranslation();
 
 	return (
@@ -76,7 +138,10 @@ export function BookCard({ id, title, author, onDelete }: { id: number, title: s
 					<BookCardTitle title={title} />
 					<BookCardAuthor author={author} />
 				</div>
-				<BookCardDeleteDialog id={id} onDelete={onDelete} />
+				<div className="flex gap-2">
+					<BookCardDuplicateButton title={title} author={author} id={id} onBookAdded={onBookAdded} />
+					<BookCardDeleteDialog id={id} onDelete={onDelete} />
+				</div>
 			</div>
 		</Card>
 	);

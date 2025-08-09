@@ -58,6 +58,7 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
       console.error('Error adding book:', error);
     }
   };
+  
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
