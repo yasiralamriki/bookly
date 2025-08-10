@@ -10,6 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface BookData {
   title: string;
@@ -20,6 +21,7 @@ interface BookData {
 export default function BookPage() {
   const params = useParams();
   const [data, setData] = useState<BookData | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch(`/api/books?id=${params.bookId}`)
@@ -48,13 +50,13 @@ export default function BookPage() {
       </BreadcrumbList>
     </Breadcrumb>
       <Card className="flex-1 self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4">
-          <h1 className="text-2xl font-bold">Book Info</h1>
+          <h1 className="text-2xl font-bold">{t("book_info")}</h1>
           <div className="flex flex-col">
-            <h2 className="text-lg font-medium">{data ? `Book: ${data.title}` : "Loading..."}</h2>
-            <h3 className="text-md font-normal">{data ? `Author: ${data.author}` : ""}</h3>
+            <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
+            <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
           </div>
           <Separator/>
-          <h1 className="text-2xl font-bold">Book Actions</h1>
+          <h1 className="text-2xl font-bold">{t("book_actions")}</h1>
           <div className="flex flex-col gap-2">
             <p>Placeholder</p>
           </div>

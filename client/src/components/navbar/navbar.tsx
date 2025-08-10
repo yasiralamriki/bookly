@@ -12,10 +12,10 @@ import { useTranslation } from 'react-i18next';
 
 function NavBarLogo() {
   return (
-    <div id="logo" className="h-8 inline-flex justify-start items-center gap-2">
+    <Link to="/" id="logo" className="h-8 inline-flex justify-start items-center gap-2">
       <img src="/src/assets/logo.svg" alt="Bookly Logo" className="h-8 w-8 inline-block rounded-sm" />
       <span className="text-lg font-semibold" >Bookly</span>
-    </div>
+    </Link>
   )
 }
 
