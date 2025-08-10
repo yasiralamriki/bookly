@@ -21,7 +21,7 @@ interface BookData {
 export default function BookPage() {
   const params = useParams();
   const [data, setData] = useState<BookData | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     fetch(`/api/books?id=${params.bookId}`)
@@ -41,7 +41,7 @@ export default function BookPage() {
             <Link to="/">Books</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator></BreadcrumbSeparator>
+        <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link to={`/books/${params.bookId?.toString()}`}>{data ? data.title : "Loading..."}</Link>
