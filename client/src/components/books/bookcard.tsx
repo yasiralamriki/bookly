@@ -34,11 +34,10 @@ function BookCardAuthor({ author }: { author: string }) {
 interface BookCardDuplicateButtonProps {
 	title: string;
 	author: string;
-	id: number;
 	onBookAdded?: () => void;
 }
 
-function BookCardDuplicateButton({ title, author, id, onBookAdded }: BookCardDuplicateButtonProps) {
+function BookCardDuplicateButton({ title, author, onBookAdded }: BookCardDuplicateButtonProps) {
 	const [newTitle, setTitle] = useState(title);
 	const [newAuthor, setAuthor] = useState(author);
 
@@ -55,8 +54,7 @@ function BookCardDuplicateButton({ title, author, id, onBookAdded }: BookCardDup
 				},
 				body: JSON.stringify({
 					title: newTitle.trim(),
-					author: newAuthor.trim(),
-					id: id + 1
+					author: newAuthor.trim()
 				})
 			});
 
@@ -142,7 +140,7 @@ export function BookCard({ id, title, author, onDelete, onBookAdded }: {
 					</div>
 				</Link>
 				<div className="flex gap-2 ml-4">
-					<BookCardDuplicateButton title={title} author={author} id={id} onBookAdded={onBookAdded} />
+					<BookCardDuplicateButton title={title} author={author} onBookAdded={onBookAdded} />
 					<BookCardDeleteDialog id={id} onDelete={onDelete} />
 				</div>
 			</div>
