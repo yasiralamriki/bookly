@@ -31,7 +31,7 @@ function NoBooksAlert() {
     );
 }
 
-function Books() {
+export default function Books() {
     const [books, setBooks] = useState<Book[]>([]);
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const [sortOrder, setSortOrder] = useState("ascending");
@@ -147,5 +147,3 @@ function Books() {
         </div>
     )
 }
-
-export default Books;
