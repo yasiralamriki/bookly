@@ -1,3 +1,4 @@
+import "../../app.css"
 import { useEffect, useState } from "react";
 import { CircleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card"
@@ -30,7 +31,7 @@ function NoBooksAlert() {
     );
 }
 
-export function BooksContainer() {
+function Books() {
     const [books, setBooks] = useState<Book[]>([]);
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const [sortOrder, setSortOrder] = useState("ascending");
@@ -146,3 +147,5 @@ export function BooksContainer() {
         </div>
     )
 }
+
+export default Books;

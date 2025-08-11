@@ -1,3 +1,4 @@
+import "../../App.css"
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card"
