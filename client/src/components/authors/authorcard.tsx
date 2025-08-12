@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
-import { BookCopy, Trash2 } from "lucide-react";
+import { UsersRound, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -67,7 +67,7 @@ function AuthorCardDuplicateButton({ name, onAuthorAdded }: AuthorCardDuplicateB
 			className={`cursor-pointer size-8 dark:hover:bg-zinc-50 dark:hover:text-black hover:bg-zinc-950 hover:text-white transition duration-300 ease-in-out`}
 			onClick={handleDuplicateAuthor}
 		>
-			<BookCopy />
+			<UsersRound />
 		</Button>
 	)
 }
