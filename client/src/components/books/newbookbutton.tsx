@@ -43,6 +43,41 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
         })
       });
 
+      try {
+        const data = await fetch('api/authors', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const authors = await data.json();
+        // Assuming authors is an array of author names or objects with a 'name' property
+        type AuthorType = { name: string } | string;
+        const authorExists = Array.isArray(authors)
+          ? authors.some((a: AuthorType) =>
+              typeof a === "string"
+                ? a === author.trim()
+                : a.name === author.trim()
+            )
+          : author.trim() in authors;
+
+        if (!authorExists) {
+          // If author doesn't exist, create a new author
+          await fetch("/api/authors", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              name: author.trim()
+            })
+          });
+        }
+      } catch (error) {
+        console.error('Error checking/adding author:', error);
+      }
+
       if (response.ok) {
         // Clear form
         setTitle("");
