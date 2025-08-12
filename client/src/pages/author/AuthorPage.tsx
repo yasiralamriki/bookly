@@ -166,7 +166,7 @@ export default function AuthorPage() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/">Authors</Link>
+            <Link to="/">{t('authors')}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>

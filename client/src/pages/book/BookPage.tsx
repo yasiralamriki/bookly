@@ -171,7 +171,7 @@ export default function BookPage() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/">Books</Link>
+            <Link to="/">{t('books')}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
