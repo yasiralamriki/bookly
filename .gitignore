@@ -74,3 +74,4 @@ yarn.lock
 
 # Configuration files
 server/data/books.json
+server/data/authors.json
