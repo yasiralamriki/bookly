@@ -23,23 +23,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { BookCopy, Trash2 } from "lucide-react";
+import { UsersRound, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-interface BookData {
+interface AuthorData {
   id: number;
-  title: string;
-  author: string;
+  name: string;
   // add other fields as needed
 }
 
-interface BookDuplicateButtonProps {
-  title: string;
+interface AuthorDuplicateButtonProps {
+  name: string;
   author: string;
 }
 
-function handleDeleteBook(bookId: number) {
-  return fetch(`/api/books?id=${bookId}`, { method: 'DELETE' })
+function handleDeleteAuthor(authorId: number) {
+  return fetch(`/api/authors?id=${authorId}`, { method: 'DELETE' })
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -51,41 +50,37 @@ function handleDeleteBook(bookId: number) {
       return true;
     })
     .catch(error => {
-      console.error('Error deleting book:', error);
+      console.error('Error deleting author:', error);
       throw error; // Re-throw so the calling component can handle it
     });
 }
 
-function BookDuplicateButton({ title, author }: BookDuplicateButtonProps) {
-  const [newTitle, setTitle] = useState(title);
-  const [newAuthor, setAuthor] = useState(author);
-
+function AuthorDuplicateButton({ name }: AuthorDuplicateButtonProps) {
+  const [newName, setName] = useState(name);
   const { t } = useTranslation();
 
-  const handleDuplicateBook = async () => {
-    if (!newTitle.trim() || !newAuthor.trim()) {
+  const handleDuplicateAuthor = async () => {
+    if (!newName.trim()) {
       return;
     }
 
     try {
-      const response = await fetch("/api/books", {
+      const response = await fetch("/api/authors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          title: newTitle.trim(),
-          author: newAuthor.trim()
+          name: newName.trim(),
         })
       });
 
       if (response.ok) {
         // Clear form
-        setTitle("");
-        setAuthor("");
+        setName("");
       }
     } catch (error) {
-      console.error('Error adding book:', error);
+      console.error('Error adding author:', error);
     }
   };
 
@@ -93,15 +88,15 @@ function BookDuplicateButton({ title, author }: BookDuplicateButtonProps) {
     <Button
       variant="secondary"
       className="cursor-pointer"
-      onClick={handleDuplicateBook}
+      onClick={handleDuplicateAuthor}
     >
-      <BookCopy />
-      {t("duplicate_book")}
+      <UsersRound />
+      {t("duplicate_author")}
     </Button>
   )
 }
 
-const BookDeleteButton = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>((props, ref) => {
+const AuthorDeleteButton = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>((props, ref) => {
   const { t } = useTranslation();
 
   return (
@@ -112,22 +107,22 @@ const BookDeleteButton = forwardRef<HTMLButtonElement, React.ComponentProps<type
       {...props}
     >
       <Trash2 />
-      {t("delete_book")}
+      {t("delete_author")}
     </Button>
   )
 });
 
-function BookDeleteDialog({ id }: { id: number }) {
+function AuthorDeleteDialog({ id }: { id: number }) {
   const {t, i18n} = useTranslation();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
-      await handleDeleteBook(id);
+      await handleDeleteAuthor(id);
       // Navigate back to home page after successful deletion
-      navigate('/');
+      navigate('/authors');
     } catch (error) {
-      console.error('Failed to delete book:', error);
+      console.error('Failed to delete author:', error);
       // Optionally show user feedback here
     }
   };
@@ -135,7 +130,7 @@ function BookDeleteDialog({ id }: { id: number }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <BookDeleteButton />
+        <AuthorDeleteButton />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -151,19 +146,19 @@ function BookDeleteDialog({ id }: { id: number }) {
 	);
 }
 
-export default function BookPage() {
+export default function AuthorPage() {
   const params = useParams();
-  const [data, setData] = useState<BookData | null>(null);
+  const [data, setData] = useState<AuthorData | null>(null);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    fetch(`/api/books?id=${params.bookId}`)
+    fetch(`/api/authors?id=${params.authorId}`)
       .then(response => response.json())
       .then(fetchedData => {
         setData(fetchedData);
       })
-      .catch(error => console.error('Error fetching books:', error));
-  }, [params.bookId]);
+      .catch(error => console.error('Error fetching authors:', error));
+  }, [params.authorId]);
 
   return (
     <div className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start gap-8 overflow-hidden">
@@ -171,30 +166,29 @@ export default function BookPage() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/">Books</Link>
+            <Link to="/">Authors</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to={`/books/${params.bookId?.toString()}`}>{data ? data.title : "Loading..."}</Link>
+            <Link to={`/authors/${params.authorId?.toString()}`}>{data ? data.name : "Loading..."}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
       <Card className="flex-1 self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4">
-          <h1 className="text-2xl font-bold">{t("book_info")}</h1>
+          <h1 className="text-2xl font-bold">{t("author_info")}</h1>
           <div className="flex flex-col">
-            <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
-            <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
+            <h2 className="text-lg font-medium">{data ? `${t("author")}: ${data.name}` : "Loading..."}</h2>
           </div>
           <Separator/>
-          <h1 className="text-2xl font-bold">{t("book_actions")}</h1>
+          <h1 className="text-2xl font-bold">{t("author_actions")}</h1>
           <div className="flex flex-row gap-2">
             {data && (
               <>
-                <BookDuplicateButton title={data.title} author={data.author} />
-                <BookDeleteDialog id={data.id} />
+                <AuthorDuplicateButton name={data.name} author={data.name} />
+                <AuthorDeleteDialog id={data.id} />
               </>
             )}
           </div>

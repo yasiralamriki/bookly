@@ -3,6 +3,7 @@ import ViteExpress from 'vite-express';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import booksRouter from './routes/books.js';
+import authorsRouter from './routes/authors.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Use routes from the server
 app.use('/api', booksRouter);
+app.use('/api', authorsRouter);
 
 // Determine if we're in production
 const isProduction = process.env.NODE_ENV === 'production';
