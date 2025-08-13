@@ -32,6 +32,12 @@ interface AuthorData {
   // add other fields as needed
 }
 
+interface BookData {
+  id: number;
+  title: string;
+  // add other fields as needed
+}
+
 interface AuthorDuplicateButtonProps {
   name: string;
   author: string;
@@ -149,6 +155,7 @@ function AuthorDeleteDialog({ id }: { id: number }) {
 export default function AuthorPage() {
   const params = useParams();
   const [data, setData] = useState<AuthorData | null>(null);
+  const [books, setBooks] = useState<BookData[] | null>(null);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -158,7 +165,19 @@ export default function AuthorPage() {
         setData(fetchedData);
       })
       .catch(error => console.error('Error fetching authors:', error));
-  }, [params.authorId]);
+
+    fetch(`/api/books`)
+      .then(response => response.json())
+      .then(fetchedBooks => {
+        for (const book of fetchedBooks) {
+          if (book.author === data?.name) {
+            setBooks(prevBooks => [...(prevBooks || []), book]);
+          }
+        }
+      })
+      .catch(error => console.error('Error fetching author books:', error));
+
+  }, [params.authorId, data?.name]);
 
   return (
     <div className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start gap-8 overflow-hidden">
@@ -181,6 +200,9 @@ export default function AuthorPage() {
           <h1 className="text-2xl font-bold">{t("author_info")}</h1>
           <div className="flex flex-col">
             <h2 className="text-lg font-medium">{data ? `${t("author")}: ${data.name}` : "Loading..."}</h2>
+            <h2 className="text-lg font-medium whitespace-pre-line">
+              {t("books")}: {books && books.length > 0 ? `\n${books.map((book, index) => `${index + 1}. ${book.title}`).join("\n")}` : "Loading..."}
+            </h2>
           </div>
           <Separator/>
           <h1 className="text-2xl font-bold">{t("author_actions")}</h1>
