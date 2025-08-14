@@ -16,7 +16,7 @@ router
 	.route('/books')
 	.get((req, res) => {
     const books = getConfigFile(path.join(__dirname, '../data/books.json'));
-
+    
     if (req.query.id) {
       const book = books.find(book => book.id === parseInt(req.query.id, 10));
       if (book) {
@@ -56,6 +56,25 @@ router
       }
     } else {
       res.status(400).json({ error: 'Book ID is required for deletion' });
+    }
+  })
+  .put((req, res) => {
+    if (req.query.id) {
+      const books = getConfigFile(path.join(__dirname, '../data/books.json'));
+      const bookId = parseInt(req.query.id, 10);
+      const bookIndex = books.findIndex(book => book.id === bookId);
+
+      if (bookIndex === -1) {
+        return res.status(404).json({ error: 'Book not found' });
+      } else {
+        const updatedBook = { ...books[bookIndex], ...req.body };
+        books[bookIndex] = updatedBook;
+
+        fs.writeFileSync(path.join(__dirname, '../data/books.json'), JSON.stringify(books, null, 2));
+        return res.status(200).json(updatedBook);
+      }
+    } else {
+      res.status(400).json({ error: 'Book ID is required for update' });
     }
   });
 

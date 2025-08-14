@@ -5,6 +5,8 @@
   "book_actions": "إجراءات الكتاب",
   "new_book": "كتاب جديد",
   "create_book": "إنشاء كتاب جديد",
+  "edit_book_name": "تغيير اسم الكتاب",
+  "edit_book_name_description": "تغيير اسم الكتاب إلى اسم آخر.",
   "delete_book": "حذف كتاب",
   "duplicate_book": "تكرار الكتاب",
   "deletion_confirmation_heading": "هل أنت متأكد تمامًا؟",

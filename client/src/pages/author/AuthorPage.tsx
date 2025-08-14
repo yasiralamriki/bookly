@@ -185,7 +185,7 @@ export default function AuthorPage() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/">{t('authors')}</Link>
+            <Link to="/authors">{t('authors')}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
@@ -201,7 +201,15 @@ export default function AuthorPage() {
           <div className="flex flex-col">
             <h2 className="text-lg font-medium">{data ? `${t("author")}: ${data.name}` : "Loading..."}</h2>
             <h2 className="text-lg font-medium whitespace-pre-line">
-              {t("books")}: {books && books.length > 0 ? `\n${books.map((book, index) => `${index + 1}. ${book.title}`).join("\n")}` : "Loading..."}
+              { books && books.length > 0 ? (
+                <>
+                  {t("books")}: `\n${books.map((book, index) => `${index + 1}. ${book.title}`).join("\n")}`
+                </>
+              ) : (
+                <>
+                  {t("books")}: {t("no_books_found")}
+                </>
+              )}
             </h2>
           </div>
           <Separator/>

@@ -5,6 +5,8 @@
   "book_actions": "Book Actions",
   "new_book": "New Book",
   "create_book": "Create New Book",
+  "edit_book_name": "Change Book Name",
+  "edit_book_name_description": "Change the name of the book to another name.",
   "delete_book": "Delete Book",
   "duplicate_book": "Duplicate Book",
   "deletion_confirmation_heading": "Are you absolutely sure?",

@@ -23,7 +23,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { BookCopy, Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { BookCopy, SquarePen, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface BookData {
@@ -154,6 +166,7 @@ function BookDeleteDialog({ id }: { id: number }) {
 export default function BookPage() {
   const params = useParams();
   const [data, setData] = useState<BookData | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -185,7 +198,59 @@ export default function BookPage() {
       <Card className="flex-1 self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4">
           <h1 className="text-2xl font-bold">{t("book_info")}</h1>
           <div className="flex flex-col">
-            <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
+            <div className="flex flex-row gap-1 items-center">
+              <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
+              <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" className="!w-6 !h-6 cursor-pointer">
+                    <SquarePen size={8} />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className='sm:max-w-[425px] [&>button]:cursor-pointer [&>button]:hidden'>
+                  <DialogHeader>
+                    <DialogTitle className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name")}</DialogTitle>
+                    <DialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name_description")}</DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-3">
+                    <Label htmlFor="book_name">{t("book_name")}</Label>
+                    <Input id="book_name" name="name" defaultValue={data ? data.title : "Book Name"} />
+                  </div>
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant="outline" className="cursor-pointer">{t("cancel")}</Button>
+                    </DialogClose>
+                    <Button
+                      type="submit"
+                      className="cursor-pointer gradient-button"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        const response = await fetch(`/api/books?id=${data ? data.id : ""}`, {
+                          method: 'PUT',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            id: data ? data.id : 1,
+                            title: (document.getElementById('book_name') as HTMLInputElement).value,
+                            author: data ? data.author : "Unknown Author",
+                          }),
+                        });
+                        
+                        if (response.ok) {
+                          // Refresh the data after successful update
+                          const updatedData = await response.json();
+                          setData(updatedData);
+                          // Close the dialog after successful update
+                          setIsEditDialogOpen(false);
+                        }
+                      }}
+                    >
+                      {t("continue")}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
             <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
           </div>
           <Separator/>
