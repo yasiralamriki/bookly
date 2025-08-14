@@ -126,27 +126,33 @@
 @layer components {
   /* Specific rule for gradient-button class */
   .gradient-button {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s ease-in-out;
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
     isolation: isolate;
   }
 
   .gradient-button::before {
     content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    @apply absolute inset-0 opacity-100 transition-opacity duration-300 ease-out pointer-events-none rounded-[inherit];
+    z-index: -2;
     background: linear-gradient(to right, rgb(99 102 241), rgb(168 85 247), rgb(236 72 153));
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    pointer-events: none;
+  }
+
+  .gradient-button::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 ease-out pointer-events-none rounded-[inherit];
     z-index: -1;
+    background: linear-gradient(to right, rgb(236 72 153), rgb(168 85 247), rgb(99 102 241));
+  }
+
+  .gradient-button:hover {
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4)) drop-shadow(0 2px 6px rgba(168, 85, 247, 0.3));
   }
 
   .gradient-button:hover::before {
-    opacity: 1;
+    @apply opacity-0;
+  }
+
+  .gradient-button:hover::after {
+    @apply opacity-100;
   }
 }
