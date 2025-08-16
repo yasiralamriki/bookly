@@ -5,7 +5,7 @@
 
 ---
 
-> WARNING
+> [!WARNING]
 > **Work in Progress**: This project is currently under development. Not all features may be fully implemented or working as expected.
 
 Bookly is a modern full-stack web application for managing and browsing your book collection. Built with React, TypeScript, Express.js, and Vite, it features a clean UI with shadcn/ui components, sorting, searching, and comprehensive book management capabilities.
