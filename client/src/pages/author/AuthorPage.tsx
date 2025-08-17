@@ -203,7 +203,7 @@ export default function AuthorPage() {
             <h2 className="text-lg font-medium whitespace-pre-line">
               { books && books.length > 0 ? (
                 <>
-                  {t("books")}: `\n${books.map((book, index) => `${index + 1}. ${book.title}`).join("\n")}`
+                  {t("books")}: {"\n"} {books.map((book, index) => `${index + 1}. ${book.title}`).join("\n")}
                 </>
               ) : (
                 <>
