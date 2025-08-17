@@ -12,9 +12,9 @@ import { useTranslation } from "react-i18next";
 
 type Book = {
     id: number;
+    date: number;
     title: string;
     author: string;
-    // add other fields if needed
 };
 
 function NoBooksAlert() {
@@ -133,6 +133,7 @@ export default function Books() {
                                     <BookCard 
                                         key={book.id}
                                         id={book.id} 
+                                        date={book.date}
                                         title={book.title} 
                                         author={book.author} 
                                         onDelete={handleDeleteBook} 

@@ -11,10 +11,37 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
-import { BookCopy, Trash2, UserRound } from "lucide-react";
+import { BookCopy, Trash2, UserRound, CalendarClock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
+
+// Utility function for locale-aware date formatting
+function formatDateByLocale(timestamp: number, locale: string, t: (key: string) => string): string {
+	if (!timestamp) return t('no_date');
+	
+	try {
+		const date = new Date(timestamp);
+		
+		// Check if date is valid
+		if (isNaN(date.getTime())) {
+			return t('invalid_date');
+		}
+		
+		// Configure date formatting options based on locale
+		const options: Intl.DateTimeFormatOptions = {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		};
+		
+		// Use Intl.DateTimeFormat for proper locale support
+		return new Intl.DateTimeFormat(locale, options).format(date);
+	} catch (error) {
+		console.error('Error formatting date:', error);
+		return t('invalid_date');
+	}
+}
 
 function BookCardTitle({ title }: { title: string }) {
 	return (
@@ -26,7 +53,19 @@ function BookCardAuthor({ author }: { author: string }) {
 	return (
 		<div className="flex items-center text-center gap-1">
 			<UserRound size={16} className="flex-shrink-0" />
-			<p className="text-sm font-normal text-muted-foreground"> {author} </p>
+			<p className="text-sm font-normal text-muted-foreground">{author}</p>
+		</div>
+	)
+}
+
+function BookCardDate({ timestamp, locale }: { timestamp: number, locale: string }) {
+	const { t } = useTranslation();
+	const formattedDate = formatDateByLocale(timestamp, locale, t);
+	
+	return (
+		<div className="flex items-center text-center gap-1">
+			<CalendarClock size={16} className="flex-shrink-0" />
+			<p className="text-sm font-normal text-muted-foreground">{formattedDate}</p>
 		</div>
 	)
 }
@@ -121,8 +160,9 @@ function BookCardDeleteDialog({ id, onDelete }: { id: number, onDelete: (id: num
 	)
 }
 
-export function BookCard({ id, title, author, onDelete, onBookAdded }: { 
+export function BookCard({ id, date, title, author, onDelete, onBookAdded }: { 
     id: number, 
+	date: number,
     title: string, 
     author: string, 
     onDelete: (id: number) => void,
@@ -136,7 +176,10 @@ export function BookCard({ id, title, author, onDelete, onBookAdded }: {
 				<Link to={`/books/${id}`} className="flex-1 cursor-pointer">
 					<div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
 						<BookCardTitle title={title} />
-						<BookCardAuthor author={author} />
+						<div className="flex items-center text-center gap-2">
+							<BookCardAuthor author={author} />
+							<BookCardDate timestamp={date} locale={i18n.language} />
+						</div>
 					</div>
 				</Link>
 				<div className="flex gap-2 ml-4">

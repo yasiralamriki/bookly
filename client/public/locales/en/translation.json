@@ -37,5 +37,8 @@
   "descending": "Descending",
   "light": "Light",
   "dark": "Dark",
-  "system": "System"
+  "system": "System",
+  "no_date": "No date",
+  "invalid_date": "Invalid date",
+  "creation_date": "Creation Date"
 }

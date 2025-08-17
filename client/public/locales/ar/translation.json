@@ -37,6 +37,8 @@
   "descending": "تنازلي",
   "light": "فاتح",
   "dark": "داكن",
-  "system": "نظام"
-
+  "system": "نظام",
+  "no_date": "لا يوجد تاريخ",
+  "invalid_date": "تاريخ غير صحيح",
+  "creation_date": "تاريخ الإنشاء"
 }
