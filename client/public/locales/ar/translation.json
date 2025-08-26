@@ -40,5 +40,6 @@
   "system": "نظام",
   "no_date": "لا يوجد تاريخ",
   "invalid_date": "تاريخ غير صحيح",
-  "creation_date": "تاريخ الإنشاء"
+  "creation_date": "تاريخ الإنشاء",
+  "date": "تاريخ"
 }

@@ -40,5 +40,6 @@
   "system": "System",
   "no_date": "No date",
   "invalid_date": "Invalid date",
-  "creation_date": "Creation Date"
+  "creation_date": "Creation Date",
+  "date": "Date"
 }

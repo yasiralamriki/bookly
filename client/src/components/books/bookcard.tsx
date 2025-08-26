@@ -15,33 +15,7 @@ import { BookCopy, Trash2, UserRound, CalendarClock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
-
-// Utility function for locale-aware date formatting
-function formatDateByLocale(timestamp: number, locale: string, t: (key: string) => string): string {
-	if (!timestamp) return t('no_date');
-	
-	try {
-		const date = new Date(timestamp);
-		
-		// Check if date is valid
-		if (isNaN(date.getTime())) {
-			return t('invalid_date');
-		}
-		
-		// Configure date formatting options based on locale
-		const options: Intl.DateTimeFormatOptions = {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		};
-		
-		// Use Intl.DateTimeFormat for proper locale support
-		return new Intl.DateTimeFormat(locale, options).format(date);
-	} catch (error) {
-		console.error('Error formatting date:', error);
-		return t('invalid_date');
-	}
-}
+import * as Locale from "@/lib/locale";
 
 function BookCardTitle({ title }: { title: string }) {
 	return (
@@ -60,7 +34,7 @@ function BookCardAuthor({ author }: { author: string }) {
 
 function BookCardDate({ timestamp, locale }: { timestamp: number, locale: string }) {
 	const { t } = useTranslation();
-	const formattedDate = formatDateByLocale(timestamp, locale, t);
+	const formattedDate = Locale.formatDateByLocale(timestamp, locale, t);
 	
 	return (
 		<div className="flex items-center text-center gap-1">

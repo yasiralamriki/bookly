@@ -37,11 +37,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { BookCopy, SquarePen, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import * as Locale from "@/lib/locale";
 
 interface BookData {
   id: number;
   title: string;
   author: string;
+  date: number; // Add the date property
   // add other fields as needed
 }
 
@@ -252,6 +254,7 @@ export default function BookPage() {
               </Dialog>
             </div>
             <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
+            <h3 className="text-md font-normal">{data ? `${t("date")}: ${Locale.formatDateByLocale(data.date, i18n.language, t)}` : ""}</h3>
           </div>
           <Separator/>
           <h1 className="text-2xl font-bold">{t("book_actions")}</h1>
