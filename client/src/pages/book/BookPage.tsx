@@ -33,11 +33,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { 
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger 
+} from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { BookCopy, SquarePen, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import * as Locale from "@/lib/locale";
+import { Textarea } from "@/components/ui/textarea";
 
 interface BookData {
   id: number;
@@ -181,92 +188,114 @@ export default function BookPage() {
   }, [params.bookId]);
 
   return (
-    <div className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start gap-8 overflow-hidden">
-    <Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link to="/">{t('books')}</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link to={`/books/${params.bookId?.toString()}`}>{data ? data.title : "Loading..."}</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
-      <Card className="flex-1 self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4">
-          <h1 className="text-2xl font-bold">{t("book_info")}</h1>
-          <div className="flex flex-col">
-            <div className="flex flex-row gap-1 items-center">
-              <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
-              <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button variant="ghost" className="!w-6 !h-6 cursor-pointer">
-                    <SquarePen size={8} />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className='sm:max-w-[425px] [&>button]:cursor-pointer [&>button]:hidden'>
-                  <DialogHeader>
-                    <DialogTitle className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name")}</DialogTitle>
-                    <DialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name_description")}</DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-3">
-                    <Label htmlFor="book_name">{t("book_name")}</Label>
-                    <Input id="book_name" name="name" defaultValue={data ? data.title : "Book Name"} />
-                  </div>
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button variant="outline" className="cursor-pointer">{t("cancel")}</Button>
-                    </DialogClose>
-                    <Button
-                      type="submit"
-                      className="cursor-pointer gradient-button"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        const response = await fetch(`/api/books?id=${data ? data.id : ""}`, {
-                          method: 'PUT',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            id: data ? data.id : 1,
-                            title: (document.getElementById('book_name') as HTMLInputElement).value,
-                            author: data ? data.author : "Unknown Author",
-                          }),
-                        });
-                        
-                        if (response.ok) {
-                          // Refresh the data after successful update
-                          const updatedData = await response.json();
-                          setData(updatedData);
-                          // Close the dialog after successful update
-                          setIsEditDialogOpen(false);
-                        }
-                      }}
-                    >
-                      {t("continue")}
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-            <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
-            <h3 className="text-md font-normal">{data ? `${t("date")}: ${Locale.formatDateByLocale(data.date, i18n.language, t)}` : ""}</h3>
-          </div>
-          <Separator/>
-          <h1 className="text-2xl font-bold">{t("book_actions")}</h1>
-          <div className="flex flex-row gap-2">
-            {data && (
-              <>
-                <BookDuplicateButton title={data.title} author={data.author} />
-                <BookDeleteDialog id={data.id} />
-              </>
-            )}
-          </div>
-      </Card>
+    <div className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start gap-4 overflow-hidden">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to="/">{t('books')}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link to={`/books/${params.bookId?.toString()}`}>{data ? data.title : "Loading..."}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      {/* Make Tabs and TabsContent stretch vertically */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <Tabs defaultValue="info" className="flex-1 flex flex-col min-h-0 gap-4">
+          <TabsList>
+            <TabsTrigger value="info" className="cursor-pointer">{t("book_info")}</TabsTrigger>
+            <TabsTrigger value="notes" className="cursor-pointer">{t("book_notes")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="info" className="flex-1 flex flex-col min-h-0">
+            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4 h-full">
+              <h1 className="text-2xl font-bold">{t("book_info")}</h1>
+              <div className="flex flex-col">
+                <div className="flex flex-row gap-1 items-center">
+                  <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
+                  <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" className="!w-6 !h-6 cursor-pointer">
+                        <SquarePen size={8} />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className='sm:max-w-[425px] [&>button]:cursor-pointer [&>button]:hidden'>
+                      <DialogHeader>
+                        <DialogTitle className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name")}</DialogTitle>
+                        <DialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name_description")}</DialogDescription>
+                      </DialogHeader>
+                      <div className="grid gap-3">
+                        <Label htmlFor="book_name">{t("book_name")}</Label>
+                        <Input id="book_name" name="name" defaultValue={data ? data.title : "Book Name"} />
+                      </div>
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <Button variant="outline" className="cursor-pointer">{t("cancel")}</Button>
+                        </DialogClose>
+                        <Button
+                          type="submit"
+                          className="cursor-pointer gradient-button"
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            const response = await fetch(`/api/books?id=${data ? data.id : ""}`, {
+                              method: 'PUT',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                id: data ? data.id : 1,
+                                title: (document.getElementById('book_name') as HTMLInputElement).value,
+                                author: data ? data.author : "Unknown Author",
+                              }),
+                            });
+                            
+                            if (response.ok) {
+                              // Refresh the data after successful update
+                              const updatedData = await response.json();
+                              setData(updatedData);
+                              // Close the dialog after successful update
+                              setIsEditDialogOpen(false);
+                            }
+                          }}
+                        >
+                          {t("continue")}
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+                <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
+                <h3 className="text-md font-normal">{data ? `${t("date")}: ${Locale.formatDateByLocale(data.date, i18n.language, t)}` : ""}</h3>
+              </div>
+              <Separator/>
+              <h1 className="text-2xl font-bold">{t("book_actions")}</h1>
+              <div className="flex flex-row gap-2">
+                {data && (
+                  <>
+                    <BookDuplicateButton title={data.title} author={data.author} />
+                    <BookDeleteDialog id={data.id} />
+                  </>
+                )}
+              </div>
+            </Card>
+          </TabsContent>
+          <TabsContent value="notes" className="flex-1 flex flex-col min-h-0">
+            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4 h-full">
+              <h1 className="text-2xl font-bold">{t("book_notes")}</h1>
+              <div className="flex flex-col flex-1 h-full">
+                <Textarea
+                  className="resize-none flex-1 h-full w-full"
+                  placeholder={t("book_notes_placeholder")}
+                ></Textarea>
+              </div>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }

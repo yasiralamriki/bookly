@@ -2,6 +2,8 @@
   "book": "Book",
   "book_name": "Book Name",
   "book_info": "Book Information",
+  "book_notes": "Book Notes",
+  "book_notes_placeholder": "Write your notes here...",
   "book_actions": "Book Actions",
   "new_book": "New Book",
   "create_book": "Create New Book",

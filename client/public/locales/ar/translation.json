@@ -2,6 +2,8 @@
   "book": "كتاب",
   "book_name": "اسم الكتاب",
   "book_info": "عن الكتاب",
+  "book_notes": "ملاحظات الكتاب",
+  "book_notes_placeholder": "اكتب ملاحظاتك هنا...",
   "book_actions": "إجراءات الكتاب",
   "new_book": "كتاب جديد",
   "create_book": "إنشاء كتاب جديد",
