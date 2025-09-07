@@ -22,17 +22,17 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // ViteExpress configuration
 ViteExpress.config({
-	mode: isProduction ? 'production' : 'development',
-	viteConfigFile: resolve(__dirname, '../client/vite.config.ts'),
-	inlineViteConfig: {
-		root: resolve(__dirname, '../client'),
-		server: {
-			middlewareMode: true,
-		},
-	},
+  mode: isProduction ? 'production' : 'development',
+  viteConfigFile: resolve(__dirname, '../client/vite.config.ts'),
+  inlineViteConfig: {
+    root: resolve(__dirname, '../client'),
+    server: {
+      middlewareMode: true,
+    },
+  },
 });
 
 ViteExpress.listen(app, 5173, () => {
-	console.log(`Server is listening on http://localhost:5173`);
-	console.log(`Mode: ${isProduction ? 'production' : 'development'}`);
+  console.log(`Server is listening on http://localhost:5173`);
+  console.log(`Mode: ${isProduction ? 'production' : 'development'}`);
 });
