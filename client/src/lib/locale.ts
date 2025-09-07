@@ -14,7 +14,8 @@ export function formatDateByLocale(timestamp: number, locale: string, t: (key: s
 		const options: Intl.DateTimeFormatOptions = {
 			year: 'numeric',
 			month: 'short',
-			day: 'numeric'
+			day: 'numeric',
+			calendar: locale === "ar" ? "islamic" : "gregory",
 		};
 		
 		// Use Intl.DateTimeFormat for proper locale support
