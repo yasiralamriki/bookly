@@ -26,6 +26,17 @@ export function formatDateByLocale(timestamp: number, locale: string, t: (key: s
 	}
 }
 
+// Utility function to convert English numbers to Arabic-Indic numerals
+export function formatNumberByLocale(number: number, locale: string): string {
+	if (locale === 'ar') {
+		// Convert English digits to Arabic-Indic digits
+		const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+		return number.toString().replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
+	}
+	return number.toString();
+}
+
 export default {
-    formatDateByLocale
+    formatDateByLocale,
+    formatNumberByLocale
 }

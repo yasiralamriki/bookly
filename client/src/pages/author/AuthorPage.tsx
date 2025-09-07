@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { UsersRound, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { formatNumberByLocale } from "@/lib/locale";
 
 interface AuthorData {
   id: number;
@@ -203,7 +204,7 @@ export default function AuthorPage() {
             <h2 className="text-lg font-medium whitespace-pre-line">
               { books && books.length > 0 ? (
                 <>
-                  {t("books")}: {"\n"} {books.map((book, index) => `${index + 1}. ${book.title}`).join("\n")}
+                  {t("books")}: {"\n"} {books.map((book, index) => `${formatNumberByLocale(index + 1, i18n.language)}. ${book.title}`).join("\n")}
                 </>
               ) : (
                 <>
