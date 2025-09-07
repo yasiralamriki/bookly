@@ -50,8 +50,8 @@ interface BookData {
   id: number;
   title: string;
   author: string;
-  date: number; // Add the date property
-  // add other fields as needed
+  date: number;
+  notes: string[];
 }
 
 interface BookDuplicateButtonProps {
@@ -187,6 +187,31 @@ export default function BookPage() {
       .catch(error => console.error('Error fetching books:', error));
   }, [params.bookId]);
 
+  async function updateNotes(newNotes: string[]) {
+    if (!data) return;
+    
+    try {
+      const response = await fetch(`/api/books?id=${data.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: data.title.trim(),
+          author: data.author.trim(),
+          notes: newNotes
+        })
+      });
+
+      if (response.ok) {
+        const updatedData = await response.json();
+        setData(updatedData);
+      }
+    } catch (error) {
+      console.error('Error updating book notes:', error);
+    }
+  }
+
   return (
     <div className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start gap-4 overflow-hidden">
       <Breadcrumb>
@@ -290,6 +315,11 @@ export default function BookPage() {
                 <Textarea
                   className="resize-none flex-1 h-full w-full"
                   placeholder={t("book_notes_placeholder")}
+                  defaultValue={data ? data.notes.join("\n") : ""}
+                  onChange={(e) => {
+                    const newNotes = e.target.value.split("\n");
+                    updateNotes(newNotes);
+                  }}
                 ></Textarea>
               </div>
             </Card>

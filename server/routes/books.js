@@ -33,7 +33,11 @@ router
     
     // Find the highest existing ID and increment it
     const maxId = books.length > 0 ? Math.max(...books.map(book => book.id)) : 0;
-    const newBook = new Book(maxId + 1, Date.now(), req.body.title, req.body.author);
+    
+    const newBook = new Book(maxId + 1, Date.now(), req.body.title, req.body.author, req.body.notes || []);
+
+    console.log('Created book object:', newBook);
+    console.log('Request body notes:', req.body.notes);
 
     books.push(newBook);
     fs.writeFileSync(path.join(__dirname, '../data/books.json'), JSON.stringify(books, null, 2));

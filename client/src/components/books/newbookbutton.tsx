@@ -39,7 +39,8 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
         },
         body: JSON.stringify({
           title: title.trim(),
-          author: author.trim()
+          author: author.trim(),
+          notes: []
         })
       });
 
