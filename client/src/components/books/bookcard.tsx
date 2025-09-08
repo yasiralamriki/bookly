@@ -25,8 +25,8 @@ function BookCardTitle({ title }: { title: string }) {
 
 function BookCardAuthor({ author }: { author: string }) {
   return (
-    <div className="flex items-center text-center gap-1">
-      <UserRound size={16} className="flex-shrink-0" />
+    <div className="flex items-center text-center gap-2">
+      <UserRound size={16} className="text-emerald-500 flex-shrink-0" />
       <p className="text-sm font-normal text-muted-foreground">{author}</p>
     </div>
   )
@@ -37,8 +37,8 @@ function BookCardDate({ timestamp, locale }: { timestamp: number, locale: string
   const formattedDate = Locale.formatDateByLocale(timestamp, locale, t);
   
   return (
-    <div className="flex items-center text-center gap-1">
-      <CalendarClock size={16} className="flex-shrink-0" />
+    <div className="flex items-center text-center gap-2">
+      <CalendarClock size={16} className="text-emerald-500 flex-shrink-0" />
       <p className="text-sm font-normal text-muted-foreground">{formattedDate}</p>
     </div>
   )
