@@ -23,11 +23,15 @@ function BookCardTitle({ title }: { title: string }) {
   )
 }
 
-function BookCardAuthor({ author }: { author: string }) {
+function BookCardAuthor({ authorName, authorDeathDate }: { authorName: string, authorDeathDate?: number }) {
+  const {i18n} = useTranslation();
+
   return (
     <div className="flex items-center text-center gap-2">
       <UserRound size={16} className="text-emerald-500 flex-shrink-0" />
-      <p className="text-sm font-normal text-muted-foreground">{author}</p>
+      <p className="text-sm font-normal text-muted-foreground">
+        {authorName} {authorDeathDate && `(${Locale.formatDeathDate(authorDeathDate, i18n.language)})`}
+      </p>
     </div>
   )
 }
@@ -46,13 +50,13 @@ function BookCardDate({ timestamp, locale }: { timestamp: number, locale: string
 
 interface BookCardDuplicateButtonProps {
   title: string;
-  author: string;
+  authorName: string;
   onBookAdded?: () => void;
 }
 
-function BookCardDuplicateButton({ title, author, onBookAdded }: BookCardDuplicateButtonProps) {
+function BookCardDuplicateButton({ title, authorName, onBookAdded }: BookCardDuplicateButtonProps) {
   const [newTitle, setTitle] = useState(title);
-  const [newAuthor, setAuthor] = useState(author);
+  const [newAuthor, setAuthor] = useState(authorName);
 
   const handleDuplicateBook = async () => {
     if (!newTitle.trim() || !newAuthor.trim()) {
@@ -90,7 +94,7 @@ function BookCardDuplicateButton({ title, author, onBookAdded }: BookCardDuplica
     <Button
       variant="secondary"
       size="icon"
-      className={`cursor-pointer size-8 dark:hover:bg-zinc-50 dark:hover:text-black hover:bg-zinc-950 hover:text-white transition duration-300 ease-in-out`}
+      className={`cursor-pointer size-8 hover:bg-emerald-500 hover:text-white transition duration-300 ease-in-out`}
       onClick={handleDuplicateBook}
     >
       <BookCopy />
@@ -134,11 +138,12 @@ function BookCardDeleteDialog({ id, onDelete }: { id: number, onDelete: (id: num
   )
 }
 
-export function BookCard({ id, date, title, author, onDelete, onBookAdded }: { 
+export function BookCard({ id, date, title, authorName, authorDeathDate, onDelete, onBookAdded }: { 
   id: number, 
   date: number,
   title: string, 
-  author: string, 
+  authorName: string, 
+  authorDeathDate?: number,
   onDelete: (id: number) => void,
   onBookAdded?: () => void 
 }) {
@@ -151,13 +156,13 @@ export function BookCard({ id, date, title, author, onDelete, onBookAdded }: {
           <div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
             <BookCardTitle title={title} />
             <div className="flex items-center text-center gap-2">
-              <BookCardAuthor author={author} />
+              <BookCardAuthor authorName={authorName} authorDeathDate={authorDeathDate} />
               <BookCardDate timestamp={date} locale={i18n.language} />
             </div>
           </div>
         </Link>
         <div className="flex gap-2 ml-4">
-          <BookCardDuplicateButton title={title} author={author} onBookAdded={onBookAdded} />
+          <BookCardDuplicateButton title={title} authorName={authorName} onBookAdded={onBookAdded} />
           <BookCardDeleteDialog id={id} onDelete={onDelete} />
         </div>
       </div>

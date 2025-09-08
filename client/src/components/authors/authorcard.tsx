@@ -11,14 +11,28 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
-import { UsersRound, Trash2 } from "lucide-react";
+import { UsersRound, Trash2, Calendar } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
+import * as Locale from "@/lib/locale";
 
 function AuthorCardName({ name }: { name: string }) {
   return (
     <h3 className="font-semibold text-lg">{name}</h3>
+  )
+}
+
+function AuthorCardDeathDate({ deathDate }: { deathDate?: number }) {
+  const { i18n } = useTranslation();
+
+  return (
+    <div className="flex items-center text-center gap-2">
+      <Calendar size={16} className="text-emerald-500 flex-shrink-0" />
+      <p className="text-sm font-normal text-muted-foreground">
+        {typeof deathDate === "number" ? Locale.formatDeathDate(deathDate, i18n.language) : ""}
+      </p>
+    </div>
   )
 }
 
@@ -64,7 +78,7 @@ function AuthorCardDuplicateButton({ name, onAuthorAdded }: AuthorCardDuplicateB
     <Button
       variant="secondary"
       size="icon"
-      className={`cursor-pointer size-8 dark:hover:bg-zinc-50 dark:hover:text-black hover:bg-zinc-950 hover:text-white transition duration-300 ease-in-out`}
+      className={`cursor-pointer size-8 hover:bg-emerald-500 hover:text-white transition duration-300 ease-in-out`}
       onClick={handleDuplicateAuthor}
     >
       <UsersRound />
@@ -108,9 +122,10 @@ function AuthorCardDeleteDialog({ id, onDelete }: { id: number, onDelete: (id: n
   )
 }
 
-export function AuthorCard({ id, name, onDelete, onAuthorAdded }: { 
+export function AuthorCard({ id, name, deathDate, onDelete, onAuthorAdded }: { 
   id: number, 
-  name: string, 
+  name: string,
+  deathDate?: number,
   onDelete: (id: number) => void,
   onAuthorAdded?: () => void 
 }) {
@@ -122,6 +137,9 @@ export function AuthorCard({ id, name, onDelete, onAuthorAdded }: {
         <Link to={`/authors/${id}`} className="flex-1 cursor-pointer">
           <div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
             <AuthorCardName name={name} />
+            <div className="flex items-center text-center gap-2">
+              {deathDate !== null && <AuthorCardDeathDate deathDate={deathDate} />}
+            </div>
           </div>
         </Link>
         <div className="flex gap-2 ml-4">

@@ -3,3 +3,21 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* Arabic numerals for number inputs in Arabic locale */
+[lang="ar"] input[type="number"] {
+  font-feature-settings: "lnum" off;
+  font-variant-numeric: tabular-nums;
+}
+
+[lang="ar"] input[type="number"]::-webkit-outer-spin-button,
+[lang="ar"] input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Force Arabic-Indic numerals using CSS counter reset approach */
+[lang="ar"] .hijri-input input {
+  direction: rtl;
+  text-align: right;
+}

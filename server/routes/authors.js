@@ -25,7 +25,16 @@ router
         return res.status(404).json({ error: 'Author not found' });
       }
     } else {
-      return res.status(200).json(authors);
+      if(req.query.name) {
+        const author = authors.find(author => author.name.toLowerCase() === req.query.name.toString().toLowerCase());
+        if (author) {
+          return res.status(200).json(author);
+        } else {
+          return res.status(404).json({ error: 'Author not found' });
+        }
+      } else {
+        return res.status(200).json(authors);
+      }
     }
 	})
 	.post((req, res) => {
@@ -33,7 +42,11 @@ router
 
     // Find the highest existing ID and increment it
     const maxId = authors.length > 0 ? Math.max(...authors.map(author => author.id)) : 0;
-    const newAuthor = new Author(maxId + 1, req.body.name, req.body.bio);
+    const newAuthor = new Author(
+      maxId + 1,
+      req.body.name,
+      req.body.deathDate || null
+    );
 
     authors.push(newAuthor);
     fs.writeFileSync(path.join(__dirname, '../data/authors.json'), JSON.stringify(authors, null, 2));

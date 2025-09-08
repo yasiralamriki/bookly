@@ -106,7 +106,7 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
         <AlertDialogHeader>
           <AlertDialogTitle className={`${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>{t("create_book")}</AlertDialogTitle>
         </AlertDialogHeader>
-        <div className="grid w-full items-center gap-3">
+        <div className="grid w-full items-center gap-4">
             <Label htmlFor="book-name">{t("book_name")}</Label>
             <Input 
               type="text" 
@@ -115,7 +115,7 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
               onChange={(e) => setTitle(e.target.value)}
             />
         </div>
-        <div className="grid w-full items-center gap-3">
+        <div className="grid w-full items-center gap-4">
             <Label htmlFor="author-name">{t("author_name")}</Label>
             <Input 
               type="text" 

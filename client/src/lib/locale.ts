@@ -27,7 +27,7 @@ export function formatDateByLocale(timestamp: number, locale: string, t: (key: s
 }
 
 // Utility function to convert English numbers to Arabic-Indic numerals
-export function formatNumberByLocale(number: number, locale: string): string {
+export function formatNumberByLocale(number: number | string, locale: string): string {
 	if (locale === 'ar') {
 		// Convert English digits to Arabic-Indic digits
 		const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
@@ -36,7 +36,15 @@ export function formatNumberByLocale(number: number, locale: string): string {
 	return number.toString();
 }
 
+export function formatDeathDate(deathDate: number, locale:string): string {
+	if (locale === 'ar') {
+		return "ت. " + formatNumberByLocale(deathDate, locale) + " هـ";
+	}
+	return "d. " + formatNumberByLocale(deathDate, locale);
+}
+
 export default {
     formatDateByLocale,
-    formatNumberByLocale
+    formatNumberByLocale,
+    formatDeathDate
 }

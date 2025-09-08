@@ -1,5 +1,5 @@
 import "../../app.css"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CircleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -33,6 +33,7 @@ function NoBooksAlert() {
 
 export default function Books() {
   const [books, setBooks] = useState<Book[]>([]);
+  const [authors, setAuthors] = useState<Record<string, { name: string; deathDate?: number }>>({});
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [sortOrder, setSortOrder] = useState("ascending");
   const [searchQuery, setSearchQuery] = useState("");
@@ -47,9 +48,52 @@ export default function Books() {
       .catch(error => console.error('Error fetching books:', error));
   };
 
+  const fetchBookAuthor = useCallback(async (authorName: string): Promise<number | undefined> => {
+    // Return cached value if already fetched
+    if (authors[authorName]) {
+      return authors[authorName].deathDate;
+    }
+
+    try {
+      const response = await fetch(`/api/authors/?name=${authorName}`);
+      const data = await response.json();
+      
+      // Cache the author data
+      setAuthors(prev => ({
+        ...prev,
+        [authorName]: {
+          name: data.name,
+          deathDate: data.deathDate
+        }
+      }));
+      
+      return data.deathDate;
+    } catch (error) {
+      console.error('Error fetching author:', error);
+      return undefined;
+    }
+  }, [authors]);
+
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  // Preload author data when books change
+  useEffect(() => {
+    const loadAuthorsData = async () => {
+      const uniqueAuthorNames = [...new Set(books.map(book => book.author))];
+      
+      for (const authorName of uniqueAuthorNames) {
+        if (!authors[authorName]) {
+          await fetchBookAuthor(authorName);
+        }
+      }
+    };
+
+    if (books.length > 0) {
+      loadAuthorsData();
+    }
+  }, [books, authors, fetchBookAuthor]);
 
   useEffect(() => {
     // Filter and sort books when search query or sort order changes
@@ -135,7 +179,8 @@ export default function Books() {
                     id={book.id} 
                     date={book.date}
                     title={book.title} 
-                    author={book.author} 
+                    authorName={book.author} 
+                    authorDeathDate={authors[book.author]?.deathDate}
                     onDelete={handleDeleteBook} 
                     onBookAdded={fetchBooks}
                   />

@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 type Author = {
   id: number;
   name: string;
-  // add other fields if needed
+  deathDate?: number;
 };
 
 function NoAuthorsAlert() {
@@ -133,6 +133,7 @@ export default function Authors() {
                     key={author.id}
                     id={author.id}
                     name={author.name}
+                    deathDate={author.deathDate}
                     onDelete={handleDeleteAuthor}
                     onAuthorAdded={fetchAuthors}
                   />

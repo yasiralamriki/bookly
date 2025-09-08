@@ -1,7 +1,8 @@
 class Author {
-  constructor(id, name) {
+  constructor(id, name, deathDate) {
     this.id = id;
     this.name = name;
+    this.deathDate = deathDate;
   }
 }
 
