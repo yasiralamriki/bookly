@@ -9,11 +9,15 @@ import { Separator } from "@/components/ui/separator"
 import { ThemeSwitcher } from '@/components/navbar/themeswitcher'
 import { LanguageSwitcher } from "@/components/navbar/languageswitcher"
 import { useTranslation } from 'react-i18next';
+import { BookOpenText } from "lucide-react"
 
 function NavBarLogo() {
   return (
     <Link to="/" id="logo" className="h-8 inline-flex justify-start items-center gap-2">
-      <img src="/src/assets/logo.svg" alt="Bookly Logo" className="h-8 w-8 inline-block rounded-sm" />
+      <div className="flex items-center justify-center relative">
+        <div className="h-8 w-8 inline-block rounded-sm bg-linear-to-br from-emerald-500 to-green-600" />
+        <BookOpenText className="absolute h-6 w-6 text-zinc-50" />
+      </div>
       <span className="text-lg font-semibold" >Bookly</span>
     </Link>
   )
