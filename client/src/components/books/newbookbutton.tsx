@@ -98,34 +98,39 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button size="lg" className="cursor-pointer gradient-button">
-            <Plus /> {t("new_book")}
+        <Button 
+          size="lg" 
+          className="cursor-pointer gradient-button transition-all duration-300 shadow-lg hover:shadow-emerald-500/25 font-medium text-base px-6 py-3 rounded-lg flex items-center gap-3"
+        >
+          <Plus size={20} className="stroke-[2.5]" />
+          <span>{t("new_book")}</span>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle className={`${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>{t("create_book")}</AlertDialogTitle>
+      <AlertDialogContent className="sm:max-w-md">
+        <AlertDialogHeader className="space-y-3">
+          <AlertDialogTitle className={`text-xl font-semibold ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
+            {t("create_book")}
+          </AlertDialogTitle>
         </AlertDialogHeader>
-        <div className="grid w-full items-center gap-4">
-            <Label htmlFor="book-name" className="gap-1">
+        <div className="space-y-6 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="book-name" className="text-sm font-medium flex items-center gap-1">
               {t("book_name")}
-              <>
-                <span className="text-destructive">*</span>
-              </>
+              <span className="text-destructive">*</span>
             </Label>
             <Input 
               type="text" 
               id="book-name" 
               placeholder={`${i18n.language === 'ar' ? 'كتاب التوحيد' : "Kitāb at-Tawhīd"}`}
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
+              className="h-11 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
             />
-        </div>
-        <div className="grid w-full items-center gap-4">
-            <Label htmlFor="author-name" className="gap-1">
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="author-name" className="text-sm font-medium flex items-center gap-1">
               {t("author_name")}
-              <>
-                <span className="text-destructive">*</span>
-              </>
+              <span className="text-destructive">*</span>
             </Label>
             <Input 
               type="text" 
@@ -133,12 +138,16 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
               placeholder={`${i18n.language === 'ar' ? 'الشيخ محمد بن عبد الوهاب' : "Shaykh Muhammad ibn 'Abd al-Wahhāb"}`}
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
+              className="h-11 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
             />
+          </div>
         </div>
-        <AlertDialogFooter>
-          <AlertDialogCancel className="cursor-pointer">{t("cancel")}</AlertDialogCancel>
+        <AlertDialogFooter className="flex gap-3">
+          <AlertDialogCancel className="cursor-pointer flex-1 h-11 font-medium hover:bg-muted transition-colors">
+            {t("cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction 
-            className="cursor-pointer gradient-button" 
+            className="cursor-pointer gradient-button flex-1 h-11 font-medium shadow-lg hover:shadow-emerald-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed" 
             onClick={handleAddBook}
             disabled={!title.trim() || !author.trim()}
           >

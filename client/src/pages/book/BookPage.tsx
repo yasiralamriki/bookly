@@ -232,12 +232,12 @@ export default function BookPage() {
       {/* Make Tabs and TabsContent stretch vertically */}
       <div className="flex-1 flex flex-col min-h-0">
         <Tabs defaultValue="info" className="flex-1 flex flex-col min-h-0 gap-4">
-          <TabsList>
-            <TabsTrigger value="info" className="cursor-pointer">{t("book_info")}</TabsTrigger>
-            <TabsTrigger value="notes" className="cursor-pointer">{t("book_notes")}</TabsTrigger>
+          <TabsList className="!bg-transparent gap-2">
+            <TabsTrigger value="info" className="cursor-pointer !bg-transparent hover:!bg-emerald-800 hover:!text-white transition-all duration-300 ease-in-out data-[state=active]:!bg-transparent data-[state=active]:!border-emerald-500">{t("book_info")}</TabsTrigger>
+            <TabsTrigger value="notes" className="cursor-pointer !bg-transparent hover:!bg-emerald-800 hover:!text-white transition-all duration-300 ease-in-out data-[state=active]:!bg-transparent data-[state=active]:!border-emerald-500">{t("book_notes")}</TabsTrigger>
           </TabsList>
           <TabsContent value="info" className="flex-1 flex flex-col min-h-0">
-            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4 h-full">
+            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border bg-transparent hover:text-accent-foreground hover:shadow-md transition-all text-start gap-4 h-full">
               <h1 className="text-2xl font-bold">{t("book_info")}</h1>
               <div className="flex flex-col">
                 <div className="flex flex-row gap-1 items-center">
@@ -309,11 +309,11 @@ export default function BookPage() {
             </Card>
           </TabsContent>
           <TabsContent value="notes" className="flex-1 flex flex-col min-h-0">
-            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4 h-full">
+            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border bg-transparent hover:text-accent-foreground hover:shadow-md transition-all text-start gap-4 h-full">
               <h1 className="text-2xl font-bold">{t("book_notes")}</h1>
               <div className="flex flex-col flex-1 h-full">
                 <Textarea
-                  className="resize-none flex-1 h-full w-full"
+                  className="resize-none flex-1 h-full w-full !bg-transparent"
                   placeholder={t("book_notes_placeholder")}
                   defaultValue={data ? data.notes.join("\n") : ""}
                   onChange={(e) => {

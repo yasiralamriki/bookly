@@ -122,7 +122,7 @@ export default function Authors() {
           </div>
           <NewAuthorButton onAuthorAdded={fetchAuthors} />
         </div>
-        <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
+        <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden bg-transparent">
           {filteredAuthors.length === 0 ? (
             <NoAuthorsAlert />
           ) : (

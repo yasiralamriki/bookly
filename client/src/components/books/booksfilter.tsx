@@ -13,7 +13,7 @@ export function BooksFilter({ sortOrder, handleSortChange}: { sortOrder: string,
 
   return (
     <Select defaultValue="ascending" value={sortOrder} onValueChange={handleSortChange}>
-      <SelectTrigger className="!h-10 cursor-pointer">
+      <SelectTrigger className="!h-10 cursor-pointer !bg-transparent">
         <SelectValue placeholder="Sort By"></SelectValue>
       </SelectTrigger>
       <SelectContent>

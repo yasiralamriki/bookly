@@ -197,7 +197,7 @@ export default function AuthorPage() {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-      <Card className="flex-1 self-stretch px-8 py-8 border hover:shadow-md transition-shadow text-start gap-4">
+      <Card className="flex-1 self-stretch px-8 py-8 border bg-transparent hover:text-accent-foreground hover:shadow-md transition-all text-start gap-4">
           <h1 className="text-2xl font-bold">{t("author_info")}</h1>
           <div className="flex flex-col">
             <h2 className="text-lg font-medium">{data ? `${t("author")}: ${data.name}` : "Loading..."}</h2>

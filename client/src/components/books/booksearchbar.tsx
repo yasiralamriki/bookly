@@ -9,9 +9,9 @@ export function BookSearchBar({ searchQuery, handleSearchChange }: { searchQuery
   const { t } = useTranslation();
 
   return (
-    <Command className="w-64 h-10  border rounded-md [&>[data-slot=command-input-wrapper]]:border-none">
-      <CommandInput 
-        placeholder={t("search_for_books")} 
+    <Command className="w-64 h-10 bg-transparent border-input border rounded-md shadow-xs [&>[data-slot=command-input-wrapper]]:border-none">
+      <CommandInput
+        placeholder={t("search_for_books")}
         value={searchQuery}
         onValueChange={handleSearchChange}
       />

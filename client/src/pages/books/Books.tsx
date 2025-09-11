@@ -167,7 +167,7 @@ export default function Books() {
           </div>
           <NewBookButton onBookAdded={fetchBooks} />
         </div>
-        <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden">
+        <Card id="books-container" className="self-stretch flex-1 p-8 flex flex-col min-h-0 overflow-hidden bg-transparent">
           {filteredBooks.length === 0 ? (
             <NoBooksAlert />
           ) : (

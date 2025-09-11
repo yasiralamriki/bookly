@@ -92,9 +92,9 @@ function BookCardDuplicateButton({ title, authorName, onBookAdded }: BookCardDup
 
   return (
     <Button
-      variant="secondary"
+      variant="outline"
       size="icon"
-      className={`cursor-pointer size-8 hover:bg-emerald-500 hover:text-white transition duration-300 ease-in-out`}
+      className={`cursor-pointer size-8 hover:!border-emerald-500 hover:text-white transition duration-300 ease-in-out`}
       onClick={handleDuplicateBook}
     >
       <BookCopy />
@@ -106,9 +106,9 @@ const BookCardDeleteButton = forwardRef<HTMLButtonElement, React.ComponentProps<
   return (
     <Button 
       ref={ref}
-      variant="secondary" 
+      variant="outline" 
       size="icon" 
-      className="cursor-pointer size-8 hover:bg-red-500 hover:text-white transition duration-300 ease-in-out"
+      className="cursor-pointer size-8 hover:!bg-red-500 hover:text-white transition duration-300 ease-in-out"
       {...props}
     >
       <Trash2 />
@@ -150,7 +150,7 @@ export function BookCard({ id, date, title, authorName, authorDeathDate, onDelet
   const { i18n } = useTranslation();
 
   return (
-    <Card key={id} className="p-4 border hover:shadow-md hover:border-emerald-500/60 hover:shadow-emerald-500/40 transition-all duration-300 ease-in-out">
+    <Card key={id} className="p-4 border bg-transparent hover:!bg-transparent hover:shadow-md hover:border-emerald-500/60 hover:shadow-emerald-500/40 transition-all duration-300 ease-in-out">
       <div className="flex justify-between items-center">
         <Link to={`/books/${id}`} className="flex-1 cursor-pointer">
           <div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
