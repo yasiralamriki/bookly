@@ -21,6 +21,7 @@
   "author_name": "Author Name",
   "author_death_date": "Death Date (Hijri)",
   "author_death_date_placeholder": "1447",
+  "author_death_date_unknown": "Unknown",
   "author_info": "Author Information",
   "author_actions": "Author Actions",
   "new_author": "New Author",

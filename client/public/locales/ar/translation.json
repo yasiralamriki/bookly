@@ -20,6 +20,7 @@
   "author": "مؤلف",
   "author_name": "اسم المؤلف",
   "author_death_date": "تاريخ الوفاة (هجري)",
+  "author_death_date_unknown": "غير معروف",
   "author_death_date_placeholder": "١٤٤٧",
   "author_info": "عن المؤلف",
   "author_actions": "إجراءات المؤلف",

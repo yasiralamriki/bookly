@@ -25,12 +25,12 @@ import {
 } from "@/components/ui/alert-dialog"
 import { UsersRound, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { formatNumberByLocale } from "@/lib/locale";
+import * as Locale from "@/lib/locale";
 
 interface AuthorData {
   id: number;
   name: string;
-  // add other fields as needed
+  deathDate: string | null;
 }
 
 interface BookData {
@@ -204,13 +204,22 @@ export default function AuthorPage() {
             <h2 className="text-lg font-medium whitespace-pre-line">
               { books && books.length > 0 ? (
                 <>
-                  {t("books")}: {"\n"} {books.map((book, index) => `${formatNumberByLocale(index + 1, i18n.language)}. ${book.title}`).join("\n")}
+                  {t("books")}: {"\n"} {books.map((book, index) => `${Locale.formatNumberByLocale(index + 1, i18n.language)}. ${book.title}`).join("\n")}
                 </>
               ) : (
                 <>
                   {t("books")}: {t("no_books_found")}
                 </>
               )}
+            </h2>
+            <h2 className="text-lg font-medium">
+              {data
+                ? `${t("author_death_date")}: ${
+                    data.deathDate && !isNaN(Number(data.deathDate))
+                      ? data.deathDate
+                      : t("author_death_date_unknown")
+                  }`
+                : "Loading..."}
             </h2>
           </div>
           <Separator/>
