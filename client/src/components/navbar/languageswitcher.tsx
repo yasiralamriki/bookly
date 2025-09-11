@@ -3,8 +3,8 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select"
+import { Globe } from "lucide-react"
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { useTranslation } from 'react-i18next';
 
@@ -30,17 +30,44 @@ export function LanguageSwitcher() {
     }
   }
 
+  function getLanguageDisplay(lang: string) {
+    switch (lang) {
+      case 'en':
+        return { name: t('english'), flag: '🇺🇸', code: 'EN' };
+      case 'ar':
+        return { name: t('arabic'), flag: '🇸🇦', code: 'AR' };
+      default:
+        return { name: t('english'), flag: '🇺🇸', code: 'EN' };
+    }
+  }
+
+  const currentLang = getBrowserLanguage();
+  const currentDisplay = getLanguageDisplay(i18n.language || currentLang);
+
   return (
-    <Select defaultValue={getBrowserLanguage()} onValueChange={handleLanguageChange}>
-      <SelectTrigger className="cursor-pointer">
-        <SelectValue placeholder="Language"></SelectValue>
+    <Select value={i18n.language} onValueChange={handleLanguageChange}>
+      <SelectTrigger className="cursor-pointer h-9 w-auto min-w-[120px] border-none bg-transparent hover:bg-accent hover:text-accent-foreground transition-colors focus:ring-0 focus:ring-offset-0">
+        <div className="flex items-center gap-2">
+          <Globe size={16} className="text-emerald-500" />
+          <span className="text-sm font-medium">{currentDisplay.code}</span>
+        </div>
       </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="en" className="cursor-pointer">
-          {t('english')}
+      <SelectContent align={i18n.dir() === 'rtl' ? "start" : "end"} className="min-w-[160px]">
+        <SelectItem value="en" className="cursor-pointer group">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-4">
+              <span className="text-lg">🇺🇸</span>
+              <span className="font-medium">{t('english')}</span>
+            </div>
+          </div>
         </SelectItem>
-        <SelectItem value="ar" className="cursor-pointer">
-          {t('arabic')}
+        <SelectItem value="ar" className="cursor-pointer group">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-3">
+              <span className="text-lg">🇸🇦</span>
+              <span className="font-medium">{t('arabic')}</span>
+            </div>
+          </div>
         </SelectItem>
       </SelectContent>
     </Select>
