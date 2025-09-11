@@ -1,7 +1,7 @@
 import "../../App.css"
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, forwardRef } from "react";
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator";
 import {
   Breadcrumb,
@@ -41,7 +41,10 @@ import {
 } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { BookCopy, SquarePen, Trash2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Skeleton } from "@/components/ui/skeleton"
+import { BookCopy, SquarePen, Trash2, Calendar, User, FileText, BookOpen } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import * as Locale from "@/lib/locale";
 import { Textarea } from "@/components/ui/textarea";
@@ -113,10 +116,10 @@ function BookDuplicateButton({ title, author }: BookDuplicateButtonProps) {
   return (
     <Button
       variant="secondary"
-      className="cursor-pointer"
+      className="cursor-pointer bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700 hover:text-emerald-800 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:border-emerald-800 dark:text-emerald-100 transition-all duration-200 shadow-sm hover:shadow-md"
       onClick={handleDuplicateBook}
     >
-      <BookCopy />
+      <BookCopy className="h-4 w-4 mr-2" />
       {t("duplicate_book")}
     </Button>
   )
@@ -129,10 +132,10 @@ const BookDeleteButton = forwardRef<HTMLButtonElement, React.ComponentProps<type
     <Button
       ref={ref}
       variant="destructive"
-      className="cursor-pointer"
+      className="cursor-pointer bg-red-50 hover:bg-red-100 border-red-200 text-red-700 hover:text-red-800 dark:bg-red-950 dark:hover:bg-red-900 dark:border-red-800 dark:text-red-100 transition-all duration-200 shadow-sm hover:shadow-md"
       {...props}
     >
-      <Trash2 />
+      <Trash2 className="h-4 w-4 mr-2" />
       {t("delete_book")}
     </Button>
   )
@@ -158,33 +161,158 @@ function BookDeleteDialog({ id }: { id: number }) {
       <AlertDialogTrigger asChild>
         <BookDeleteButton />
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>
-					<AlertDialogTitle className={`${ i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}> {t('deletion_confirmation_heading')} </AlertDialogTitle>
-					<AlertDialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}> {t('deletion_confirmation_description')} </AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel className="cursor-pointer"> {t('cancel')} </AlertDialogCancel>
-					<AlertDialogAction className="gradient-button cursor-pointer" onClick={handleDelete}> {t('continue')} </AlertDialogAction>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
-	);
+          <AlertDialogTitle className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
+            {t('deletion_confirmation_heading')}
+          </AlertDialogTitle>
+          <AlertDialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
+            {t('deletion_confirmation_description')}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel className="cursor-pointer">
+            {t('cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction 
+            className="cursor-pointer bg-destructive hover:bg-destructive/90 text-destructive-foreground" 
+            onClick={handleDelete}
+          >
+            {t('continue')}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function BookPageSkeleton() {
+  const { t } = useTranslation();
+  
+  return (
+    <div className="h-[calc(100vh-4.5rem)] px-4 md:px-16 lg:px-32 xl:px-64 py-8 md:py-16 lg:py-32 flex flex-col justify-start gap-6 overflow-hidden">
+      {/* Enhanced Breadcrumb Skeleton */}
+      <div className="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30 rounded-lg p-4 border border-emerald-200/50 dark:border-emerald-800/50 shadow-sm">
+        <Breadcrumb>
+          <BreadcrumbList className="flex items-center">
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link 
+                  to="/" 
+                  className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-medium"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  {t('books')}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator className="text-emerald-400 dark:text-emerald-600" />
+            <BreadcrumbItem>
+              <Skeleton className="h-4 w-32" />
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      
+      <div className="flex-1 flex flex-col min-h-0">
+        <Tabs defaultValue="info" className="flex-1 flex flex-col min-h-0 gap-6">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50 dark:bg-black/40 backdrop-blur-sm rounded-lg p-1 h-auto border border-border/50 dark:border-emerald-500/20">
+            <TabsTrigger 
+              value="info" 
+              className="cursor-pointer data-[state=active]:bg-emerald-100 dark:data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-800 dark:data-[state=active]:text-emerald-300 data-[state=active]:border data-[state=active]:border-emerald-300 dark:data-[state=active]:border-emerald-500/30 data-[state=active]:shadow-sm transition-all duration-200 py-2.5 px-4 rounded-md font-medium flex items-center justify-center gap-2 text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
+            >
+              <BookOpen className="h-4 w-4" />
+              {t("book_info")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="notes" 
+              className="cursor-pointer data-[state=active]:bg-emerald-100 dark:data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-800 dark:data-[state=active]:text-emerald-300 data-[state=active]:border data-[state=active]:border-emerald-300 dark:data-[state=active]:border-emerald-500/30 data-[state=active]:shadow-sm transition-all duration-200 py-2.5 px-4 rounded-md font-medium flex items-center justify-center gap-2 text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
+            >
+              <FileText className="h-4 w-4" />
+              {t("book_notes")}
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="info" className="flex-1 flex flex-col min-h-0">
+            <Card className="flex-1 flex flex-col border border-border/50 bg-card/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-2xl font-bold flex items-center gap-3">
+                    <BookOpen className="h-6 w-6 text-emerald-500" />
+                    {t("book_info")}
+                  </CardTitle>
+                  <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 border-emerald-200">
+                    <FileText className="h-3 w-3 mr-1" />
+                    {t("book")}
+                  </Badge>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="flex-1 space-y-6">
+                {/* Book Details Section */}
+                <div className="grid gap-4">
+                  <div className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg border border-border/30">
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src="" />
+                      <AvatarFallback className="bg-emerald-100 text-emerald-700 font-semibold">
+                        <Skeleton className="h-6 w-6" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-6 w-48" />
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <User className="h-4 w-4" />
+                        <Skeleton className="h-4 w-32" />
+                      </div>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Calendar className="h-4 w-4" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Actions Section */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <SquarePen className="h-5 w-5 text-emerald-500" />
+                    {t("book_actions")}
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    <Skeleton className="h-10 w-32" />
+                    <Skeleton className="h-10 w-28" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
 }
 
 export default function BookPage() {
   const params = useParams();
   const [data, setData] = useState<BookData | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`/api/books?id=${params.bookId}`)
       .then(response => response.json())
       .then(fetchedData => {
         setData(fetchedData);
+        setIsLoading(false);
       })
-      .catch(error => console.error('Error fetching books:', error));
+      .catch(error => {
+        console.error('Error fetching books:', error);
+        setIsLoading(false);
+      });
   }, [params.bookId]);
 
   async function updateNotes(newNotes: string[]) {
@@ -212,116 +340,199 @@ export default function BookPage() {
     }
   }
 
+  if (isLoading) {
+    return <BookPageSkeleton />;
+  }
+
   return (
-    <div className="h-[calc(100vh-4.5rem)] px-64 py-32 flex flex-col justify-start gap-4 overflow-hidden">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to="/">{t('books')}</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator className={i18n.dir() === "rtl" ? "rotate-180" : ""}></BreadcrumbSeparator>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to={`/books/${params.bookId?.toString()}`}>{data ? data.title : "Loading..."}</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      {/* Make Tabs and TabsContent stretch vertically */}
+    <div className="h-[calc(100vh-4.5rem)] px-4 md:px-16 lg:px-32 xl:px-64 py-8 md:py-16 lg:py-32 flex flex-col justify-start gap-6 overflow-hidden book-page-fade-in">
+      {/* Enhanced Breadcrumb */}
+      <div className="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30 rounded-lg p-4 border border-emerald-200/50 dark:border-emerald-800/50 shadow-sm">
+        <Breadcrumb>
+          <BreadcrumbList className="flex items-center">
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link 
+                  to="/" 
+                  className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-medium"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  {t('books')}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator className={`text-emerald-400 dark:text-emerald-600 ${i18n.dir() === "rtl" ? "rotate-180" : ""}`} />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link 
+                  to={`/books/${params.bookId?.toString()}`} 
+                  className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors font-medium truncate max-w-[200px] md:max-w-none"
+                  title={data ? data.title : "Loading..."}
+                >
+                  {data ? data.title : "Loading..."}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      
+      {/* Enhanced Tabs Layout */}
       <div className="flex-1 flex flex-col min-h-0">
-        <Tabs defaultValue="info" className="flex-1 flex flex-col min-h-0 gap-4">
-          <TabsList className="!bg-transparent gap-2">
-            <TabsTrigger value="info" className="cursor-pointer !bg-transparent hover:!bg-emerald-800 hover:!text-white transition-all duration-300 ease-in-out data-[state=active]:!bg-transparent data-[state=active]:!border-emerald-500">{t("book_info")}</TabsTrigger>
-            <TabsTrigger value="notes" className="cursor-pointer !bg-transparent hover:!bg-emerald-800 hover:!text-white transition-all duration-300 ease-in-out data-[state=active]:!bg-transparent data-[state=active]:!border-emerald-500">{t("book_notes")}</TabsTrigger>
+        <Tabs defaultValue="info" className="flex-1 flex flex-col min-h-0 gap-6">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50 dark:bg-black/40 backdrop-blur-sm rounded-lg p-1 h-auto border border-border/50 dark:border-emerald-500/20">
+            <TabsTrigger 
+              value="info" 
+              className="cursor-pointer data-[state=active]:bg-emerald-100 dark:data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-800 dark:data-[state=active]:text-emerald-300 data-[state=active]:border data-[state=active]:border-emerald-300 dark:data-[state=active]:border-emerald-500/30 data-[state=active]:shadow-sm transition-all duration-200 py-2.5 px-4 rounded-md font-medium flex items-center justify-center gap-2 text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
+            >
+              <BookOpen className="h-4 w-4" />
+              {t("book_info")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="notes" 
+              className="cursor-pointer data-[state=active]:bg-emerald-100 dark:data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-800 dark:data-[state=active]:text-emerald-300 data-[state=active]:border data-[state=active]:border-emerald-300 dark:data-[state=active]:border-emerald-500/30 data-[state=active]:shadow-sm transition-all duration-200 py-2.5 px-4 rounded-md font-medium flex items-center justify-center gap-2 text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
+            >
+              <FileText className="h-4 w-4" />
+              {t("book_notes")}
+            </TabsTrigger>
           </TabsList>
+          
           <TabsContent value="info" className="flex-1 flex flex-col min-h-0">
-            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border bg-transparent hover:text-accent-foreground hover:shadow-md transition-all text-start gap-4 h-full">
-              <h1 className="text-2xl font-bold">{t("book_info")}</h1>
-              <div className="flex flex-col">
-                <div className="flex flex-row gap-1 items-center">
-                  <h2 className="text-lg font-medium">{data ? `${t("book")}: ${data.title}` : "Loading..."}</h2>
-                  <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button variant="ghost" className="!w-6 !h-6 cursor-pointer">
-                        <SquarePen size={8} />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className='sm:max-w-[425px] [&>button]:cursor-pointer [&>button]:hidden'>
-                      <DialogHeader>
-                        <DialogTitle className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name")}</DialogTitle>
-                        <DialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name_description")}</DialogDescription>
-                      </DialogHeader>
-                      <div className="grid gap-3">
-                        <Label htmlFor="book_name">{t("book_name")}</Label>
-                        <Input id="book_name" name="name" defaultValue={data ? data.title : "Book Name"} />
-                      </div>
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button variant="outline" className="cursor-pointer">{t("cancel")}</Button>
-                        </DialogClose>
-                        <Button
-                          type="submit"
-                          className="cursor-pointer gradient-button"
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            const response = await fetch(`/api/books?id=${data ? data.id : ""}`, {
-                              method: 'PUT',
-                              headers: {
-                                'Content-Type': 'application/json',
-                              },
-                              body: JSON.stringify({
-                                id: data ? data.id : 1,
-                                title: (document.getElementById('book_name') as HTMLInputElement).value,
-                                author: data ? data.author : "Unknown Author",
-                              }),
-                            });
-                            
-                            if (response.ok) {
-                              // Refresh the data after successful update
-                              const updatedData = await response.json();
-                              setData(updatedData);
-                              // Close the dialog after successful update
-                              setIsEditDialogOpen(false);
-                            }
-                          }}
-                        >
-                          {t("continue")}
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
+            <Card className="flex-1 flex flex-col border border-border/50 bg-card/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 book-card-hover">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="responsive-text-2xl font-bold flex items-center gap-3">
+                    <BookOpen className="h-6 w-6 text-emerald-500" />
+                    {t("book_info")}
+                  </CardTitle>
+                  <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900 dark:text-emerald-100 dark:border-emerald-700">
+                    <FileText className="h-3 w-3 mr-1" />
+                    {t("book")}
+                  </Badge>
                 </div>
-                <h3 className="text-md font-normal">{data ? `${t("author")}: ${data.author}` : ""}</h3>
-                <h3 className="text-md font-normal">{data ? `${t("date")}: ${Locale.formatDateByLocale(data.date, i18n.language, t)}` : ""}</h3>
-              </div>
-              <Separator/>
-              <h1 className="text-2xl font-bold">{t("book_actions")}</h1>
-              <div className="flex flex-row gap-2">
-                {data && (
-                  <>
-                    <BookDuplicateButton title={data.title} author={data.author} />
-                    <BookDeleteDialog id={data.id} />
-                  </>
-                )}
-              </div>
+              </CardHeader>
+              
+              <CardContent className="flex-1 space-y-6">
+                {/* Enhanced Book Details Section */}
+                <div className="grid gap-4">
+                  <div className="flex items-center gap-4 p-6 bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-950 dark:to-green-950 rounded-lg border border-emerald-200 dark:border-emerald-800 shadow-sm">
+                    <Avatar className="h-16 w-16 ring-2 ring-emerald-200 dark:ring-emerald-700">
+                      <AvatarImage src="" />
+                      <AvatarFallback className="bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-100 font-semibold text-lg">
+                        {data?.title ? data.title.charAt(0).toUpperCase() : 'B'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <h2 className="responsive-text-xl font-bold text-foreground">{data?.title || "Unknown Title"}</h2>
+                        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                          <DialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition-colors">
+                              <SquarePen className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className='sm:max-w-[425px] [&>button]:cursor-pointer [&>button]:hidden'>
+                            <DialogHeader>
+                              <DialogTitle className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name")}</DialogTitle>
+                              <DialogDescription className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>{t("edit_book_name_description")}</DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-3">
+                              <Label htmlFor="book_name">{t("book_name")}</Label>
+                              <Input id="book_name" name="name" defaultValue={data ? data.title : "Book Name"} />
+                            </div>
+                            <DialogFooter>
+                              <DialogClose asChild>
+                                <Button variant="outline" className="cursor-pointer">{t("cancel")}</Button>
+                              </DialogClose>
+                              <Button
+                                type="submit"
+                                className="cursor-pointer gradient-button"
+                                onClick={async (e) => {
+                                  e.preventDefault();
+                                  const response = await fetch(`/api/books?id=${data ? data.id : ""}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                      'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                      id: data ? data.id : 1,
+                                      title: (document.getElementById('book_name') as HTMLInputElement).value,
+                                      author: data ? data.author : "Unknown Author",
+                                    }),
+                                  });
+                                  
+                                  if (response.ok) {
+                                    const updatedData = await response.json();
+                                    setData(updatedData);
+                                    setIsEditDialogOpen(false);
+                                  }
+                                }}
+                              >
+                                {t("continue")}
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <User className="h-4 w-4 text-emerald-500" />
+                        <span className="font-medium">{t("author")}:</span>
+                        <span>{data?.author || "Unknown Author"}</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Calendar className="h-4 w-4 text-emerald-500" />
+                        <span className="font-medium">{t("date")}:</span>
+                        <span>{data ? Locale.formatDateByLocale(data.date, i18n.language, t) : "Unknown Date"}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator className="bg-border/50" />
+
+                {/* Enhanced Actions Section */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <SquarePen className="h-5 w-5 text-emerald-500" />
+                    {t("book_actions")}
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {data && (
+                      <>
+                        <BookDuplicateButton title={data.title} author={data.author} />
+                        <BookDeleteDialog id={data.id} />
+                      </>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
             </Card>
           </TabsContent>
+          
           <TabsContent value="notes" className="flex-1 flex flex-col min-h-0">
-            <Card className="flex-1 flex flex-col self-stretch px-8 py-8 border bg-transparent hover:text-accent-foreground hover:shadow-md transition-all text-start gap-4 h-full">
-              <h1 className="text-2xl font-bold">{t("book_notes")}</h1>
-              <div className="flex flex-col flex-1 h-full">
-                <Textarea
-                  className="resize-none flex-1 h-full w-full !bg-transparent"
-                  placeholder={t("book_notes_placeholder")}
-                  defaultValue={data ? data.notes.join("\n") : ""}
-                  onChange={(e) => {
-                    const newNotes = e.target.value.split("\n");
-                    updateNotes(newNotes);
-                  }}
-                ></Textarea>
-              </div>
+            <Card className="flex-1 flex flex-col border border-border/50 bg-card/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 book-card-hover">
+              <CardHeader className="pb-4">
+                <CardTitle className="responsive-text-2xl font-bold flex items-center gap-3">
+                  <FileText className="h-6 w-6 text-emerald-500" />
+                  {t("book_notes")}
+                </CardTitle>
+              </CardHeader>
+              
+              <CardContent className="flex-1 flex flex-col min-h-0">
+                <div className="flex-1 relative">
+                  <Textarea
+                    className="resize-none absolute inset-0 w-full h-full bg-transparent border-2 border-dashed border-emerald-500/20 hover:border-emerald-500/40 focus:border-emerald-500/60 focus:border-solid focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-emerald-500/60 focus-visible:outline-none transition-all duration-200 rounded-lg p-4 focus:outline-none focus:bg-emerald-50/20 dark:focus:bg-emerald-950/20 placeholder:text-muted-foreground/60 !ring-0 !ring-offset-0"
+                    placeholder={t("book_notes_placeholder")}
+                    defaultValue={data ? data.notes.join("\n") : ""}
+                    onChange={(e) => {
+                      const newNotes = e.target.value.split("\n");
+                      updateNotes(newNotes);
+                    }}
+                  />
+                </div>
+              </CardContent>
             </Card>
           </TabsContent>
         </Tabs>

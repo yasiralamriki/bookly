@@ -11,30 +11,13 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
-import { UsersRound, Trash2, Calendar } from "lucide-react";
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { UserPlus, Trash2, Calendar, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Locale from "@/lib/locale";
-
-function AuthorCardName({ name }: { name: string }) {
-  return (
-    <h3 className="font-semibold text-lg">{name}</h3>
-  )
-}
-
-function AuthorCardDeathDate({ deathDate }: { deathDate?: number }) {
-  const { t, i18n } = useTranslation();
-
-  return (
-    <div className="flex items-center text-center gap-2">
-      <Calendar size={16} className="text-emerald-500 flex-shrink-0" />
-      <p className="text-sm font-normal text-muted-foreground">
-        {typeof deathDate === "number" ? Locale.formatDeathDate(deathDate, i18n.language) : t("author_death_date_unknown")}
-      </p>
-    </div>
-  )
-}
 
 interface AuthorCardDuplicateButtonProps {
   name: string;
@@ -78,10 +61,10 @@ function AuthorCardDuplicateButton({ name, onAuthorAdded }: AuthorCardDuplicateB
     <Button
       variant="outline"
       size="icon"
-      className={`cursor-pointer size-8 hover:!border-emerald-500 hover:text-white transition duration-300 ease-in-out`}
+      className="cursor-pointer bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700 hover:text-emerald-800 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:border-emerald-800 dark:text-emerald-100 transition-all duration-200 shadow-sm hover:shadow-md"
       onClick={handleDuplicateAuthor}
     >
-      <UsersRound />
+      <UserPlus className="size-4" />
     </Button>
   )
 }
@@ -92,10 +75,10 @@ const AuthorCardDeleteButton = forwardRef<HTMLButtonElement, React.ComponentProp
       ref={ref}
       variant="outline" 
       size="icon" 
-      className="cursor-pointer size-8 hover:!bg-red-500 hover:text-white transition duration-300 ease-in-out"
+      className="cursor-pointer bg-red-50 hover:bg-red-100 border-red-200 text-red-700 hover:text-red-800 dark:bg-red-950 dark:hover:bg-red-900 dark:border-red-800 dark:text-red-100 transition-all duration-200 shadow-sm hover:shadow-md"
       {...props}
     >
-      <Trash2 />
+      <Trash2 className="size-4" />
     </Button>
   )
 });
@@ -115,7 +98,7 @@ function AuthorCardDeleteDialog({ id, onDelete }: { id: number, onDelete: (id: n
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer"> {t('cancel')} </AlertDialogCancel>
-          <AlertDialogAction className="gradient-button cursor-pointer" onClick={() => onDelete(id)}> {t('continue')} </AlertDialogAction>
+          <AlertDialogAction className="cursor-pointer bg-red-500 hover:bg-red-600 text-white border-red-500 hover:border-red-600 transition-colors duration-200" onClick={() => onDelete(id)}> {t('continue')} </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -129,20 +112,54 @@ export function AuthorCard({ id, name, deathDate, onDelete, onAuthorAdded }: {
   onDelete: (id: number) => void,
   onAuthorAdded?: () => void 
 }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
-    <Card key={id} className="p-4 border bg-transparent hover:!bg-transparent hover:shadow-md hover:border-emerald-500/60 hover:shadow-emerald-500/40 transition-all duration-300 ease-in-out">
-      <div className="flex justify-between items-center">
+    <Card key={id} className="group relative p-0 border border-border/50 bg-gradient-to-r from-card/80 to-card/60 backdrop-blur-sm hover:border-emerald-200 dark:hover:border-emerald-800 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300 ease-out overflow-hidden">
+      {/* Left colored stripe */}
+      <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-emerald-400 to-emerald-600 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      <div className="p-6 flex items-center justify-between">
         <Link to={`/authors/${id}`} className="flex-1 cursor-pointer">
-          <div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
-            <AuthorCardName name={name} />
-            <div className="flex items-center text-center gap-2">
-              <AuthorCardDeathDate deathDate={deathDate} />
+          <div className={`flex items-center gap-4 ${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
+            {/* Author Avatar */}
+            <div className="flex-shrink-0">
+              <Avatar className="h-12 w-12 ring-2 ring-emerald-200 dark:ring-emerald-700/50 group-hover:ring-emerald-300 dark:group-hover:ring-emerald-600 transition-all duration-300">
+                <AvatarFallback className="bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800 text-emerald-700 dark:text-emerald-300 font-bold text-lg group-hover:from-emerald-200 group-hover:to-emerald-300 dark:group-hover:from-emerald-800 dark:group-hover:to-emerald-700 transition-all duration-300">
+                  <User className="h-6 w-6" />
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            
+            {/* Content */}
+            <div className="flex-1 min-w-0 space-y-2">
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-lg text-foreground group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors duration-300 truncate">
+                  {name}
+                </h3>
+                <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 text-xs font-medium border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-700/50">
+                  {t("author")}
+                </Badge>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Calendar size={16} className="text-emerald-500 flex-shrink-0" />
+                <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
+                  {typeof deathDate === "number" ? (
+                    <>
+                      {t("author_death_date")}: <span className="font-normal">{Locale.formatDeathDate(deathDate, i18n.language)}</span>
+                    </>
+                  ) : (
+                    <span className="italic opacity-75">{t("author_death_date_unknown")}</span>
+                  )}
+                </p>
+              </div>
             </div>
           </div>
         </Link>
-        <div className="flex gap-2 ml-4">
+        
+        {/* Action Buttons */}
+        <div className="flex gap-2 ml-4 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
           <AuthorCardDuplicateButton name={name} onAuthorAdded={onAuthorAdded} />
           <AuthorCardDeleteDialog id={id} onDelete={onDelete} />
         </div>
