@@ -93,7 +93,7 @@ function AuthorDuplicateButton({ name }: AuthorDuplicateButtonProps) {
 
   return (
     <Button
-      variant="secondary"
+      variant="default"
       className="cursor-pointer"
       onClick={handleDuplicateAuthor}
     >
