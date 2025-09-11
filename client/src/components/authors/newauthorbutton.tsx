@@ -82,7 +82,12 @@ export function NewAuthorButton({ onAuthorAdded }: NewAuthorProps) {
         </AlertDialogHeader>
         <div className="grid w-full items-center gap-4">
           <div className="grid w-full items-center gap-4">
-            <Label htmlFor="authorName">{t("author_name")}</Label>
+            <Label htmlFor="authorName" className="gap-1">
+              {t("author_name")}
+              <>
+                <span className="text-destructive">*</span>
+              </>
+            </Label>
             <Input 
               type="text" 
               id="authorName" 
