@@ -24,13 +24,13 @@ function AuthorCardName({ name }: { name: string }) {
 }
 
 function AuthorCardDeathDate({ deathDate }: { deathDate?: number }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="flex items-center text-center gap-2">
       <Calendar size={16} className="text-emerald-500 flex-shrink-0" />
       <p className="text-sm font-normal text-muted-foreground">
-        {typeof deathDate === "number" ? Locale.formatDeathDate(deathDate, i18n.language) : ""}
+        {typeof deathDate === "number" ? Locale.formatDeathDate(deathDate, i18n.language) : t("author_death_date_unknown")}
       </p>
     </div>
   )
@@ -138,7 +138,7 @@ export function AuthorCard({ id, name, deathDate, onDelete, onAuthorAdded }: {
           <div className={`${i18n.dir(i18n.language) === 'rtl' ? 'text-right' : 'text-left'}`}>
             <AuthorCardName name={name} />
             <div className="flex items-center text-center gap-2">
-              {deathDate !== null && <AuthorCardDeathDate deathDate={deathDate} />}
+              <AuthorCardDeathDate deathDate={deathDate} />
             </div>
           </div>
         </Link>
