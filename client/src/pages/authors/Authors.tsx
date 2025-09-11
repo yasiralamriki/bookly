@@ -127,7 +127,7 @@ export default function Authors() {
             <NoAuthorsAlert />
           ) : (
             <ScrollArea className="flex-1 w-full h-0">
-              <div className="flex flex-col justify-start items-stretch gap-4 pr-4">
+              <div className="flex flex-col justify-start items-stretch gap-4">
                 {filteredAuthors.map((author) => (
                   <AuthorCard
                     key={author.id}

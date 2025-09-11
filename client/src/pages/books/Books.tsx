@@ -172,7 +172,7 @@ export default function Books() {
             <NoBooksAlert />
           ) : (
             <ScrollArea className="flex-1 w-full h-0">
-              <div className="flex flex-col justify-start items-stretch gap-4 pr-4">
+              <div className="flex flex-col justify-start items-stretch gap-4">
                 {filteredBooks.map((book) => (
                   <BookCard 
                     key={book.id}

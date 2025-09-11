@@ -15,10 +15,10 @@ function NavBarLogo() {
   return (
     <Link to="/" id="logo" className="h-8 inline-flex justify-start items-center gap-2">
       <div className="flex items-center justify-center relative">
-        <div className="h-8 w-8 inline-block rounded-sm bg-linear-to-br from-emerald-500 to-green-600" />
-        <BookOpenText className="absolute h-6 w-6 text-zinc-50" />
+        <div className="h-10 w-10 inline-block rounded-sm bg-linear-to-br from-emerald-500 to-green-600" />
+        <BookOpenText className="absolute h-8 w-8 text-zinc-50" />
       </div>
-      <span className="text-lg font-semibold" >Bookly</span>
+      <span className="text-lg font-semibold bg-gradient-to-br from-emerald-500 via-emerald-600 to-green-600 inline-block text-transparent bg-clip-text animated-background" >Bookly</span>
     </Link>
   )
 }
