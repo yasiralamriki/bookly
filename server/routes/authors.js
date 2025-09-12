@@ -4,11 +4,19 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 // Import local modules
-import { Author } from '../lib/authors.js';
 import { getConfigFile } from '../lib/config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+class Author {
+  constructor(id, name, deathDate, notes) {
+    this.id = id;
+    this.name = name;
+    this.deathDate = deathDate;
+    this.notes = notes;
+  }
+}
 
 const router = express.Router();
 

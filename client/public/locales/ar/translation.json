@@ -15,6 +15,7 @@
   "deletion_confirmation_description": "لا يمكن التراجع عن هذا الإجراء، سيؤدي ذلك إلى حذف هذا الكتاب.",
   "books": "كتب",
   "search_for_books": "البحث عن كتب...",
+  "filtered_results": "نتائج مُرشحة",
   "no_books_found": "لا توجد كتب",
   "no_books_match_criteria": "لا توجد كتب تطابق معايير البحث الخاصة بك. يرجى تجربة مصطلح بحث مختلف أو إضافة كتب جديدة.",
   "author": "مؤلف",

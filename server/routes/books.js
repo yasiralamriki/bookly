@@ -4,11 +4,19 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 // Import local modules
-import { Book } from '../lib/books.js';
 import { getConfigFile } from '../lib/config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+class Book {
+  constructor(id, date, title, author, notes) {
+    this.id = id;
+    this.date = date;
+    this.title = title;
+    this.author = author;
+    this.notes = notes;
+  }
+}
 
 const router = express.Router();
 

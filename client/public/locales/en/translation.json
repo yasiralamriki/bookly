@@ -15,6 +15,7 @@
   "deletion_confirmation_description": "This action cannot be undone. This will permanently delete this book.",
   "books": "Books",
   "search_for_books": "Search for books...",
+  "filtered_results": "Filtered Results",
   "no_books_found": "No books found",
   "no_books_match_criteria": "No books match your search criteria. Please try a different search term or add new books.",
   "author": "Author",
