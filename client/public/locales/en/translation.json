@@ -24,6 +24,8 @@
   "author_death_date_unknown": "Unknown",
   "author_info": "Author Information",
   "author_actions": "Author Actions",
+  "author_notes": "Author Notes",
+  "author_notes_placeholder": "Write your notes here...",
   "new_author": "New Author",
   "create_author": "Create New Author",
   "delete_author": "Delete Author",
