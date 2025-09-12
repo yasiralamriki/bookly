@@ -146,7 +146,6 @@ bookly/
 │   │   └── authors.json    # Authors data
 │   ├── lib/                # Server utilities and modules
 │   ├── routes/             # API route handlers
-│   ├── pdfs/               # PDF storage directory
 │   ├── server.js           # Main server file
 │   └── package.json        # Server dependencies and scripts
 └── package.json           # Workspace configuration
