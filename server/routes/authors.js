@@ -45,7 +45,8 @@ router
     const newAuthor = new Author(
       maxId + 1,
       req.body.name,
-      req.body.deathDate || null
+      req.body.deathDate || null,
+      req.body.notes || []
     );
 
     authors.push(newAuthor);
@@ -69,6 +70,25 @@ router
       }
     } else {
       res.status(400).json({ error: 'Author ID is required for deletion' });
+    }
+  })
+  .put((req, res) => {
+    if (req.query.id) {
+      const authors = getConfigFile(path.join(__dirname, '../data/authors.json'));
+      const authorId = parseInt(req.query.id, 10);
+      const authorIndex = authors.findIndex(author => author.id === authorId);
+
+      if (authorIndex === -1) {
+        return res.status(404).json({ error: 'Author not found' });
+      } else {
+        const updatedAuthor = { ...authors[authorIndex], ...req.body };
+        authors[authorIndex] = updatedAuthor;
+
+        fs.writeFileSync(path.join(__dirname, '../data/authors.json'), JSON.stringify(authors, null, 2));
+        return res.status(200).json(updatedAuthor);
+      }
+    } else {
+      res.status(400).json({ error: 'Author ID is required for update' });
     }
   });
 
