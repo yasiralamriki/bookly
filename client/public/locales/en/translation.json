@@ -33,6 +33,7 @@
   "duplicate_author": "Duplicate Author",
   "authors": "Authors",
   "search_for_authors": "Search for authors...",
+  "select_author": "Select author...",
   "no_authors_found": "No authors found",
   "no_authors_match_criteria": "No authors match your search criteria. Please try a different search term or add new authors.",
   "data": "Data",

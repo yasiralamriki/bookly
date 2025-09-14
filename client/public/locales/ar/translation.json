@@ -32,6 +32,7 @@
   "duplicate_author": "تكرار المؤلف",
   "authors": "مؤلفات",
   "search_for_authors": "البحث عن مؤلفات...",
+  "select_author": "اختر مؤلف...",
   "no_authors_found": "لا توجد مؤلفات",
   "no_authors_match_criteria": "لا توجد مؤلفات تطابق معايير البحث الخاصة بك. يرجى تجربة مصطلح بحث مختلف أو إضافة مؤلفات جديدة.",
   "data": "بيانات",

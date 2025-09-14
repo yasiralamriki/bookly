@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -10,6 +10,7 @@ import { ThemeSwitcher } from '@/components/navbar/themeswitcher'
 import { LanguageSwitcher } from "@/components/navbar/languageswitcher"
 import { useTranslation } from 'react-i18next';
 import { BookOpenText } from "lucide-react"
+import { useEffect, useState } from "react"
 
 function NavBarLogo() {
   return (
@@ -26,6 +27,17 @@ function NavBarLogo() {
 export function Navbar() {
   const { t, i18n } = useTranslation();
 
+  const location = useLocation();
+  const [selected, setSelected] = useState<string | null>(location.pathname);
+
+  useEffect(() => {
+    setSelected(location.pathname);
+  }, [location.pathname]);
+
+  const handleSelect = (item: string) => {
+    setSelected(item);
+  };
+
   return (
     <nav id="navbar-container" className='sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 shadow-sm'>
       <div className="container mx-auto px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -37,7 +49,8 @@ export function Navbar() {
                 <NavigationMenuLink asChild>
                   <Link 
                     to="/" 
-                    className="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-00 hover:bg-transparent hover:text-emerald-500 focus:bg-transparent focus:text-emerald-500 ${selected === '/' ? 'bg-transparent text-emerald-500' : ''} focus:outline-none disabled:pointer-events-none disabled:opacity-50`}
+                    onClick={() => handleSelect('/')}
                   >
                     {t('books')}
                   </Link>
@@ -47,7 +60,8 @@ export function Navbar() {
                 <NavigationMenuLink asChild>
                   <Link 
                     to="/authors" 
-                    className="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:bg-transparent hover:text-emerald-500 focus:bg-transparent focus:text-emerald-500 ${selected === '/authors' ? 'bg-transparent text-emerald-500' : ''} focus:outline-none disabled:pointer-events-none disabled:opacity-50`}
+                    onClick={() => handleSelect('/authors')}
                   >
                     {t('authors')}
                   </Link>
@@ -57,7 +71,8 @@ export function Navbar() {
                 <NavigationMenuLink asChild>
                   <Link 
                     to="/data" 
-                    className="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:bg-transparent hover:text-emerald-500 focus:bg-transparent focus:text-emerald-500 ${selected === '/data' ? 'bg-transparent text-emerald-500' : ''} focus:outline-none disabled:pointer-events-none disabled:opacity-50`}
+                    onClick={() => handleSelect('/data')}
                   >
                     {t('data')}
                   </Link>
@@ -67,7 +82,8 @@ export function Navbar() {
                 <NavigationMenuLink asChild>
                   <Link 
                     to="/settings" 
-                    className="px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:bg-transparent hover:text-emerald-500 focus:bg-transparent focus:text-emerald-500 ${selected === '/settings' ? 'bg-transparent text-emerald-500' : ''} focus:outline-none disabled:pointer-events-none disabled:opacity-50`}
+                    onClick={() => handleSelect('/settings')}
                   >
                     {t('settings')}
                   </Link>

@@ -8,15 +8,108 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Plus } from "lucide-react";
-import { useState } from "react";
+import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils"
 
 interface NewBookProps {
   onBookAdded?: () => void;
+}
+
+interface AuthorComboboxProps {
+  value: string;
+  onValueChange: (value: string) => void;
+}
+
+function AuthorCombobox({ value, onValueChange }: AuthorComboboxProps) {
+  const [authors, setAuthors] = useState<{ name: string; }[]>([])
+  const [open, setOpen] = useState(false)
+
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      try {
+        const response = await fetch('/api/authors', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        setAuthors(data);
+      } catch (error) {
+        console.error('Error fetching authors:', error);
+      }
+    };
+    fetchAuthors();
+  }, []);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full flex-1 justify-between h-11"
+        >
+          {value
+            ? authors.find((author) => author.name === value)?.name
+            : t("select_author")}
+          <ChevronsUpDown className="opacity-50" />
+        </Button>
+      </PopoverTrigger>
+        <PopoverContent className="p-0" style={{ width: "var(--radix-popover-trigger-width)" }}>
+        <Command>
+          <CommandInput placeholder={t("search_for_authors")} className="h-9" />
+          <ScrollArea className="h-[200px]">
+            <CommandList>
+              <CommandEmpty>{t("no_authors_found")}</CommandEmpty>
+              <CommandGroup>
+                {authors.map((author) => (
+                  <CommandItem
+                    key={author.name}
+                    value={author.name}
+                    onSelect={(currentValue) => {
+                      onValueChange(currentValue === value ? "" : currentValue)
+                      setOpen(false)
+                    }}
+                  >
+                    {author.name}
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        value === author.name ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </ScrollArea>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  )
 }
 
 export function NewBookButton({ onBookAdded }: NewBookProps) {
@@ -132,13 +225,9 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
               {t("author_name")}
               <span className="text-destructive">*</span>
             </Label>
-            <Input 
-              type="text" 
-              id="author-name" 
-              placeholder={`${i18n.language === 'ar' ? 'الشيخ محمد بن عبد الوهاب' : "Shaykh Muhammad ibn 'Abd al-Wahhāb"}`}
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-              className="h-11 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            <AuthorCombobox 
+              value={author} 
+              onValueChange={setAuthor}
             />
           </div>
         </div>
