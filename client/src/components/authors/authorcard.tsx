@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { UserPlus, Trash2, Calendar, User } from "lucide-react";
+import { Trash2, Calendar, User, UsersRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -64,7 +64,7 @@ function AuthorCardDuplicateButton({ name, onAuthorAdded }: AuthorCardDuplicateB
       className="cursor-pointer bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700 hover:text-emerald-800 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:border-emerald-800 dark:text-emerald-100 transition-all duration-200 shadow-sm hover:shadow-md"
       onClick={handleDuplicateAuthor}
     >
-      <UserPlus className="size-4" />
+      <UsersRound className="size-4" />
     </Button>
   )
 }

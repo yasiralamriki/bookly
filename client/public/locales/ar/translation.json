@@ -26,6 +26,7 @@
   "author_info": "عن المؤلف",
   "author_actions": "إجراءات المؤلف",
   "author_notes": "ملاحظات المؤلف",
+  "author_notes_placeholder": "اكتب ملاحظاتك هنا...",
   "new_author": "مؤلف جديد",
   "create_author": "إنشاء مؤلف جديد",
   "delete_author": "حذف مؤلف",
