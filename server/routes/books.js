@@ -9,12 +9,13 @@ import { getConfigFile } from '../lib/config.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 class Book {
-  constructor(id, date, title, author, notes) {
+  constructor(id, date, title, author, notes, completed) {
     this.id = id;
     this.date = date;
     this.title = title;
     this.author = author;
     this.notes = notes;
+    this.completed = completed;
   }
 }
 
@@ -47,7 +48,8 @@ router
       Date.now(),
       req.body.title,
       req.body.author,
-      req.body.notes || []
+      req.body.notes || [],
+      req.body.completed || false
     );
 
     books.push(newBook);

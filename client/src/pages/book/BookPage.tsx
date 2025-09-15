@@ -44,7 +44,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { BookCopy, SquarePen, Trash2, Calendar, User, FileText, BookOpen } from "lucide-react";
+import { BookCopy, SquarePen, Trash2, Calendar, User, FileText, BookOpen, BookCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import * as Locale from "@/lib/locale";
 import { Textarea } from "@/components/ui/textarea";
@@ -55,6 +55,7 @@ interface BookData {
   author: string;
   date: number;
   notes: string[];
+  completed: boolean;
 }
 
 interface BookDuplicateButtonProps {
@@ -340,6 +341,31 @@ export default function BookPage() {
     }
   }
 
+  async function updateBookStatus(completedStatus: boolean) {
+    if (!data) return;
+    
+    try {
+      const response = await fetch(`/api/books?id=${data.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: data.title.trim(),
+          author: data.author.trim(),
+          completed: completedStatus
+        })
+      });
+
+      if (response.ok) {
+        const updatedData = await response.json();
+        setData(updatedData);
+      }
+    } catch (error) {
+      console.error('Error updating book status:', error);
+    }
+  }
+
   if (isLoading) {
     return <BookPageSkeleton />;
   }
@@ -475,16 +501,36 @@ export default function BookPage() {
                         </Dialog>
                       </div>
                       
-                      <div className="flex items-center gap-2 text-muted-foreground">
+                      <div className="flex items-center gap-1 text-muted-foreground">
                         <User className="h-4 w-4 text-emerald-500" />
                         <span className="font-medium">{t("author")}:</span>
                         <span>{data?.author || "Unknown Author"}</span>
                       </div>
                       
-                      <div className="flex items-center gap-2 text-muted-foreground">
+                      <div className="flex items-center gap-1 text-muted-foreground">
                         <Calendar className="h-4 w-4 text-emerald-500" />
                         <span className="font-medium">{t("date")}:</span>
                         <span>{data ? Locale.formatDateByLocale(data.date, i18n.language, t) : "Unknown Date"}</span>
+                      </div>
+
+                      <div className="flex items-center gap-1 text-muted-foreground">
+                        <BookOpen className="h-4 w-4 text-emerald-500" />
+                        <span className="font-medium">{t("status")}:</span>
+                        <span>{data ? (data.completed ? t('book_completed') : t('book_not_completed')) : "Unknown Status"}</span>
+                      </div>
+
+                      <div className="flex items-center text-muted-foreground">
+                        <Button 
+                          variant="outline" 
+                          className="cursor-pointer bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700 hover:text-emerald-800 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:border-emerald-800 dark:text-emerald-100 transition-all duration-200 shadow-sm hover:shadow-md"
+                          onClick={
+                            updateBookStatus.bind(null, !data?.completed)
+                            
+                          }
+                        >
+                          <BookCheck className="h-4 w-4 mr-2" />
+                          {data?.completed ? t("mark_book_as_not_completed") : t("mark_book_as_completed")}
+                        </Button>
                       </div>
                     </div>
                   </div>

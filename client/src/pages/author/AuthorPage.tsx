@@ -44,7 +44,7 @@ interface AuthorData {
 	id: number;
 	name: string;
 	deathDate: string | null;
-  notes: string[];
+	notes: string[];
 }
 
 interface BookData {
@@ -56,8 +56,8 @@ interface BookData {
 interface AuthorDuplicateButtonProps {
 	name: string;
 	author: string;
-  deathDate?: string | null;
-  notes?: string[];
+	deathDate?: string | null;
+	notes?: string[];
 }
 
 function handleDeleteAuthor(authorId: number) {
@@ -78,10 +78,16 @@ function handleDeleteAuthor(authorId: number) {
 		});
 }
 
-function AuthorDuplicateButton({ name, deathDate, notes }: AuthorDuplicateButtonProps) {
+function AuthorDuplicateButton({
+	name,
+	deathDate,
+	notes,
+}: AuthorDuplicateButtonProps) {
 	const [newName, setName] = useState(name);
-  const [newDeathDate, setDeathDate] = useState<string | null>(deathDate ?? null);
-  const [newNotes, setNotes] = useState<string[]>(notes || []);
+	const [newDeathDate, setDeathDate] = useState<string | null>(
+		deathDate ?? null
+	);
+	const [newNotes, setNotes] = useState<string[]>(notes || []);
 	const { t } = useTranslation();
 
 	const handleDuplicateAuthor = async () => {
@@ -105,8 +111,8 @@ function AuthorDuplicateButton({ name, deathDate, notes }: AuthorDuplicateButton
 			if (response.ok) {
 				// Clear form
 				setName('');
-        setDeathDate(null);
-        setNotes([]);
+				setDeathDate(null);
+				setNotes([]);
 			}
 		} catch (error) {
 			console.error('Error adding author:', error);
@@ -379,19 +385,19 @@ export default function AuthorPage() {
 											</AvatarFallback>
 										</Avatar>
 										<div className="flex-1 space-y-3">
-											<div className="flex items-center gap-2">
+											<div className="flex items-center gap-1">
 												<h2 className="responsive-text-xl font-bold text-foreground">
 													{data?.name ||
 														'Unknown Author'}
 												</h2>
 											</div>
-											<div className="flex items-center gap-2 text-muted-foreground">
+											<div className="flex items-center gap-1 text-muted-foreground">
 												<User className="h-4 w-4 text-emerald-500" />
 												<span className="font-medium">
 													{t('author')}
 												</span>
 											</div>
-											<div className="flex items-center gap-2 text-muted-foreground">
+											<div className="flex items-center gap-1 text-muted-foreground">
 												<Calendar className="h-4 w-4 text-emerald-500" />
 												<span className="font-medium">
 													{t('author_death_date')}:{' '}
