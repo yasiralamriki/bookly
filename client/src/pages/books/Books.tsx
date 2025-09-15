@@ -2,7 +2,6 @@ import "../../app.css"
 import { useEffect, useState, useCallback } from "react";
 import { BookOpen, Library } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { NewBookButton } from "@/components/books/newbookbutton";
 import { BookSearchBar } from "@/components/books/booksearchbar";
@@ -203,7 +202,7 @@ export default function Books() {
             <NoBooksAlert />
           ) : (
             <CardContent className="flex-1 p-6 min-h-0">
-              <ScrollArea className="h-full w-full scrollbar-hide">
+              <div className="h-full w-full overflow-y-auto hide-scrollbar">
                 <div className="space-y-4">
                   {filteredBooks.map((book) => (
                     <BookCard 
@@ -218,7 +217,7 @@ export default function Books() {
                     />
                   ))}
                 </div>
-              </ScrollArea>
+              </div>
             </CardContent>
           )}
         </Card>

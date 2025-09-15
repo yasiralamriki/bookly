@@ -21,7 +21,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -64,7 +63,7 @@ function AuthorCombobox({ value, onValueChange }: AuthorComboboxProps) {
   }, []);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -81,31 +80,29 @@ function AuthorCombobox({ value, onValueChange }: AuthorComboboxProps) {
         <PopoverContent className="p-0" style={{ width: "var(--radix-popover-trigger-width)" }}>
         <Command>
           <CommandInput placeholder={t("search_for_authors")} className="h-9" />
-          <ScrollArea className="h-[200px]">
-            <CommandList>
-              <CommandEmpty>{t("no_authors_found")}</CommandEmpty>
-              <CommandGroup>
-                {authors.map((author) => (
-                  <CommandItem
-                    key={author.name}
-                    value={author.name}
-                    onSelect={(currentValue) => {
-                      onValueChange(currentValue === value ? "" : currentValue)
-                      setOpen(false)
-                    }}
-                  >
-                    {author.name}
-                    <Check
-                      className={cn(
-                        "ml-auto",
-                        value === author.name ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </ScrollArea>
+          <CommandList className="max-h-[200px]">
+            <CommandEmpty>{t("no_authors_found")}</CommandEmpty>
+            <CommandGroup>
+              {authors.map((author) => (
+                <CommandItem
+                  key={author.name}
+                  value={author.name}
+                  onSelect={(currentValue) => {
+                    onValueChange(currentValue === value ? "" : currentValue)
+                    setOpen(false)
+                  }}
+                >
+                  {author.name}
+                  <Check
+                    className={cn(
+                      "ml-auto",
+                      value === author.name ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

@@ -158,7 +158,7 @@ export default function Authors() {
             <NoAuthorsAlert />
           ) : (
             <CardContent className="flex-1 p-6 min-h-0">
-              <ScrollArea className="h-full w-full scrollbar-hide">
+              <div className="h-full w-full overflow-y-auto hide-scrollbar">
                 <div className="space-y-4">
                   {filteredAuthors.map((author) => (
                     <AuthorCard
@@ -171,7 +171,7 @@ export default function Authors() {
                     />
                   ))}
                 </div>
-              </ScrollArea>
+              </div>
             </CardContent>
           )}
         </Card>
