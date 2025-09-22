@@ -95,7 +95,7 @@ export function NewAuthorButton({ onAuthorAdded }: NewAuthorProps) {
             <Input 
               type="text" 
               id="authorName" 
-              placeholder={`${i18n.language === 'ar' ? 'الشيخ محمد بن عبد الوهاب' : "Shaykh Muhammad ibn 'Abd al-Wahhāb"}`}
+              placeholder={t("author_name_placeholder")}
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="h-11 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"

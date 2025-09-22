@@ -449,7 +449,7 @@ export default function BookPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-3">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1">
                         <h2 className="responsive-text-xl font-bold text-foreground">{data?.title || "Unknown Title"}</h2>
                         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                           <DialogTrigger asChild>

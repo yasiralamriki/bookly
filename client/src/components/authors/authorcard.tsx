@@ -108,7 +108,7 @@ function AuthorCardDeleteDialog({ id, onDelete }: { id: number, onDelete: (id: n
 export function AuthorCard({ id, name, deathDate, onDelete, onAuthorAdded }: { 
   id: number, 
   name: string,
-  deathDate?: number,
+  deathDate?: string | number | null,
   onDelete: (id: number) => void,
   onAuthorAdded?: () => void 
 }) {
@@ -145,9 +145,9 @@ export function AuthorCard({ id, name, deathDate, onDelete, onAuthorAdded }: {
               <div className="flex items-center gap-2">
                 <Calendar size={16} className="text-emerald-500 flex-shrink-0" />
                 <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
-                  {typeof deathDate === "number" ? (
+                  {deathDate && deathDate !== "null" && deathDate !== "" && !isNaN(Number(deathDate)) ? (
                     <>
-                      {t("author_death_date")}: <span className="font-normal">{Locale.formatDeathDate(deathDate, i18n.language)}</span>
+                      {t("author_death_date")}: <span className="font-normal">{Locale.formatDeathDate(Number(deathDate), i18n.language)}</span>
                     </>
                   ) : (
                     <span className="italic opacity-75">{t("author_death_date_unknown")}</span>

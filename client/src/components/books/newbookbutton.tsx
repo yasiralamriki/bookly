@@ -230,11 +230,7 @@ export function NewBookButton({ onBookAdded }: NewBookProps) {
 						<Input
 							type="text"
 							id="book-name"
-							placeholder={`${
-								i18n.language === 'ar'
-									? 'كتاب التوحيد'
-									: 'Kitāb at-Tawhīd'
-							}`}
+							placeholder={t('book_name_placeholder')}
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							className="h-11 transition-all focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
