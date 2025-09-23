@@ -56,6 +56,7 @@ interface BookData {
   date: number;
   notes: string[];
   completed: boolean;
+  tags: string[];
 }
 
 interface BookDuplicateButtonProps {
@@ -431,10 +432,18 @@ export default function BookPage() {
                     <BookOpen className="h-6 w-6 text-emerald-500" />
                     {t("book_info")}
                   </CardTitle>
-                  <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900 dark:text-emerald-100 dark:border-emerald-700">
-                    <FileText className="h-3 w-3 mr-1" />
-                    {t("book")}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    {data?.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-700/50"
+                      >
+                        {tag ?.toLowerCase() === "book" ? <FileText className="h-3 w-3 mr-1" /> : <BookOpen className="h-3 w-3 mr-1" />}
+                        {tag ?.toLowerCase() === "book" ? t("book") : tag}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </CardHeader>
               

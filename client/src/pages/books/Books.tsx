@@ -16,6 +16,7 @@ type Book = {
   title: string;
   author: string;
   completed: boolean;
+  tags: string[];
 };
 
 function NoBooksAlert() {
@@ -212,6 +213,7 @@ export default function Books() {
                       date={book.date}
                       title={book.title} 
                       completed={book.completed}
+                      tags={book.tags}
                       authorName={book.author} 
                       authorDeathDate={authors[book.author]?.deathDate}
                       onDelete={handleDeleteBook} 
