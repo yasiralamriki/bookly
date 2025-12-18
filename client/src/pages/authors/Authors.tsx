@@ -1,8 +1,7 @@
-import "../../app.css"
+import "../../App.css"
 import { useEffect, useState } from "react";
 import { User, UsersRound } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { NewAuthorButton } from "@/components/authors/newauthorbutton";
 import { AuthorSearchBar } from "@/components/authors/authorsearchbar";

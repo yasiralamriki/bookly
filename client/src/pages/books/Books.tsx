@@ -1,4 +1,4 @@
-import "../../app.css"
+import "../../App.css"
 import { useEffect, useState, useCallback } from "react";
 import { BookOpen, Library } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card"

@@ -7,7 +7,7 @@
 > [!WARNING]
 > **Work in Progress**: This project is currently under development. Not all features may be fully implemented or working as expected.
 
-Bookly is a modern full-stack web application for managing and browsing your book and author collection. Built with React 19, TypeScript, Express.js, and Vite, it features a clean UI with shadcn/ui components, internationalization support (Arabic/English), theme switching, sorting, searching, and comprehensive book and author management capabilities.
+Bookly is a modern full-stack desktop application for managing and browsing your book and author collection. Built with React 19, TypeScript, Tauri v2, Express.js, and Vite, it features a clean UI with shadcn/ui components, internationalization support (Arabic/English), theme switching, sorting, searching, and comprehensive book and author management capabilities.
 
 ![Bookly Screenshot](./client/public/screenshot.png)
 
@@ -22,6 +22,13 @@ Bookly is a modern full-stack web application for managing and browsing your boo
 - Add and delete books and authors with intuitive dialogs
 - Individual book and author detail pages
 - Multi-page navigation (Books, Authors, Data, Settings)
+
+### 🖥️ Native Desktop App
+
+- Cross-platform desktop application powered by Tauri v2
+- Native window controls and system integration
+- Small bundle size and fast startup
+- Runs on Windows, macOS, and Linux
 
 ### 🌐 Internationalization
 
@@ -74,12 +81,24 @@ Bookly is a modern full-stack web application for managing and browsing your boo
 - **Node.js** - JavaScript runtime
 - **JSON File Storage** - Simple file-based data storage for books and authors
 
+### Desktop
+
+- **Tauri v2** - Lightweight cross-platform desktop framework
+- **Rust** - Backend runtime for native performance
+- **WebKitGTK** - Web view for Linux
+- **WebView2** - Web view for Windows
+
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js (v18 or newer recommended)
 - pnpm (recommended package manager)
+- Rust (for Tauri development)
+- System dependencies for Tauri:
+  - **Linux**: `libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev`
+  - **Windows**: WebView2 (usually pre-installed on Windows 10/11)
+  - **macOS**: Xcode Command Line Tools
 
 ### Installation
 
@@ -96,13 +115,19 @@ Bookly is a modern full-stack web application for managing and browsing your boo
    pnpm install:all
    ```
 
-3. Start the development server:
+3. Start the development server (web):
 
    ```sh
    pnpm dev
    ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+4. Start the desktop app (Tauri):
+
+   ```sh
+   pnpm tauri dev
+   ```
+
+5. Open [http://localhost:5173](http://localhost:5173) in your browser (for web version).
 
 ### Available Scripts
 
@@ -113,6 +138,9 @@ From the root directory:
 - `pnpm start` - Start production server
 - `pnpm install:all` - Install dependencies for both client and server
 - `pnpm build:production` - Build and start production server
+- `pnpm tauri dev` - Start Tauri desktop app in development mode
+- `pnpm tauri build` - Build the desktop app for production
+- `pnpm tauri icon <path>` - Generate app icons from a source image
 
 ## Project Structure
 
@@ -148,6 +176,13 @@ bookly/
 │   ├── routes/             # API route handlers
 │   ├── server.js           # Main server file
 │   └── package.json        # Server dependencies and scripts
+├── src-tauri/              # Tauri desktop application
+│   ├── src/                # Rust source files
+│   │   ├── main.rs         # Main entry point
+│   │   └── lib.rs          # Library module
+│   ├── icons/              # Application icons
+│   ├── tauri.conf.json     # Tauri configuration
+│   └── Cargo.toml          # Rust dependencies
 └── package.json           # Workspace configuration
 ```
 
@@ -225,6 +260,7 @@ MIT
 
 ## Acknowledgments
 
+- [Tauri](https://tauri.app/) for the lightweight desktop framework
 - [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
 - [Radix UI](https://radix-ui.com/) for accessible primitives
 - [Lucide](https://lucide.dev/) for the icon set
