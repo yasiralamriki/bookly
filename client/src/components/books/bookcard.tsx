@@ -16,11 +16,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   BookCopy,
   Trash2,
-  UserRound,
+  Icon,
   CalendarClock,
   BookOpen,
   BookCheck,
 } from "lucide-react";
+import { featherText } from "@lucide/lab";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -220,7 +221,8 @@ export function BookCard({
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                 <div className="flex items-center gap-1">
-                  <UserRound
+                  <Icon
+                    iconNode={featherText}
                     size={16}
                     className="text-emerald-500 flex-shrink-0"
                   />

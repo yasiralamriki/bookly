@@ -1,6 +1,7 @@
 import "../../App.css"
 import { useEffect, useState } from "react";
-import { User, UsersRound } from "lucide-react";
+import { Icon } from "lucide-react";
+import { featherPlus, featherSquare } from "@lucide/lab";
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { NewAuthorButton } from "@/components/authors/newauthorbutton";
@@ -23,7 +24,7 @@ function NoAuthorsAlert() {
     <div className="flex-1 flex justify-center items-center p-8">
       <div className="text-center space-y-6">
         <div className="mx-auto w-24 h-24 bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 rounded-full flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
-          <User className="w-12 h-12 text-emerald-500" />
+          <Icon iconNode={featherPlus} className="w-12 h-12 text-emerald-500" />
         </div>
         <div className="space-y-2">
           <h3 className="text-xl font-semibold text-foreground">{t("no_authors_found")}</h3>
@@ -118,7 +119,7 @@ export default function Authors() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-lg flex items-center justify-center">
-              <UsersRound className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+              <Icon iconNode={featherSquare} className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-foreground">{t("authors")}</h1>
@@ -129,7 +130,7 @@ export default function Authors() {
             </div>
           </div>
           <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900 dark:text-emerald-100 dark:border-emerald-700">
-            <User className="w-3 h-3 mr-1" />
+            <Icon iconNode={featherPlus} className="w-3 h-3 mr-1" />
             {Locale.formatNumberByLocale(filteredAuthors.length, i18n.language)}
           </Badge>
         </div>

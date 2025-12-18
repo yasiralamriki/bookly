@@ -13,7 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Trash2, Calendar, User, UsersRound } from "lucide-react";
+import { Trash2, Calendar, Icon } from "lucide-react";
+import { featherPlus, featherSquare } from "@lucide/lab";
 import { useTranslation } from "react-i18next";
 import { forwardRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -64,7 +65,7 @@ function AuthorCardDuplicateButton({ name, onAuthorAdded }: AuthorCardDuplicateB
       className="cursor-pointer bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700 hover:text-emerald-800 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:border-emerald-800 dark:text-emerald-100 transition-all duration-200 shadow-sm hover:shadow-md"
       onClick={handleDuplicateAuthor}
     >
-      <UsersRound className="size-4" />
+      <Icon iconNode={featherSquare} className="size-4" />
     </Button>
   )
 }
@@ -126,7 +127,7 @@ export function AuthorCard({ id, name, deathDate, onDelete, onAuthorAdded }: {
             <div className="flex-shrink-0">
               <Avatar className="h-12 w-12 ring-2 ring-emerald-200 dark:ring-emerald-700/50 group-hover:ring-emerald-300 dark:group-hover:ring-emerald-600 transition-all duration-300">
                 <AvatarFallback className="bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800 text-emerald-700 dark:text-emerald-300 font-bold text-lg group-hover:from-emerald-200 group-hover:to-emerald-300 dark:group-hover:from-emerald-800 dark:group-hover:to-emerald-700 transition-all duration-300">
-                  <User className="h-6 w-6" />
+                  <Icon iconNode={featherPlus} className="h-6 w-6" />
                 </AvatarFallback>
               </Avatar>
             </div>

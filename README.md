@@ -165,8 +165,8 @@ bookly/
 │   │   └── i18n.js         # Internationalization configuration
 │   ├── public/
 │   │   └── locales/        # Translation files
-│   │       ├── en/         # English translations
-│   │       └── ar/         # Arabic translations
+│   │       ├── en.json     # English translations
+│   │       └── ar.json     # Arabic translations
 │   └── package.json        # Client dependencies and scripts
 ├── server/                 # Express.js backend
 │   ├── data/               # JSON data files
@@ -206,8 +206,8 @@ The application supports multiple languages with automatic detection:
 
 To add a new language:
 
-1. Create a new directory in `client/public/locales/[language-code]/`
-2. Add a `translation.json` file with translated strings
+1. Create a new file `client/public/locales/[language-code].json`
+2. Add translated strings to the JSON file
 3. The application will automatically detect and switch based on browser preferences
 
 ### API Endpoints

@@ -44,7 +44,8 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import { BookCopy, SquarePen, Trash2, Calendar, User, FileText, BookOpen, BookCheck } from "lucide-react";
+import { BookCopy, SquarePen, Trash2, Calendar, Icon, FileText, BookOpen, BookCheck } from "lucide-react";
+import { featherText } from "@lucide/lab";
 import { useTranslation } from "react-i18next";
 import * as Locale from "@/lib/locale";
 import { Textarea } from "@/components/ui/textarea";
@@ -263,7 +264,7 @@ function BookPageSkeleton() {
                     <div className="flex-1 space-y-2">
                       <Skeleton className="h-6 w-48" />
                       <div className="flex items-center gap-2 text-muted-foreground">
-                        <User className="h-4 w-4" />
+                        <Icon iconNode={featherText} className="h-4 w-4" />
                         <Skeleton className="h-4 w-32" />
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
@@ -511,7 +512,7 @@ export default function BookPage() {
                       </div>
                       
                       <div className="flex items-center gap-1 text-muted-foreground">
-                        <User className="h-4 w-4 text-emerald-500" />
+                        <Icon iconNode={featherText} className="h-4 w-4 text-emerald-500" />
                         <span className="font-medium">{t("author")}:</span>
                         <span>{data?.author || "Unknown Author"}</span>
                       </div>

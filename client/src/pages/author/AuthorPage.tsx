@@ -28,14 +28,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  UsersRound,
+  Icon,
   Trash2,
-  User,
   Book,
   Calendar,
   SquarePen,
   FileText,
 } from "lucide-react";
+import { featherSquare, featherPlus } from "@lucide/lab";
 import { useTranslation } from "react-i18next";
 import * as Locale from "@/lib/locale";
 import { Textarea } from "@/components/ui/textarea";
@@ -147,7 +147,7 @@ function AuthorDuplicateButton({
       className="cursor-pointer bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700 hover:text-emerald-800 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:border-emerald-800 dark:text-emerald-100 transition-all duration-200 shadow-sm hover:shadow-md"
       onClick={handleDuplicateAuthor}
     >
-      <UsersRound className="h-4 w-4 mr-2" />
+      <Icon iconNode={featherSquare} className="h-4 w-4 mr-2" />
       {t("duplicate_author")}
     </Button>
   );
@@ -294,7 +294,7 @@ export default function AuthorPage() {
                     to="/authors"
                     className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-medium"
                   >
-                    <UsersRound className="h-4 w-4" />
+                    <Icon iconNode={featherSquare} className="h-4 w-4" />
                     {t("authors")}
                   </Link>
                 </BreadcrumbLink>
@@ -326,7 +326,7 @@ export default function AuthorPage() {
                   to="/authors"
                   className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-medium"
                 >
-                  <UsersRound className="h-4 w-4" />
+                  <Icon iconNode={featherSquare} className="h-4 w-4" />
                   {t("authors")}
                 </Link>
               </BreadcrumbLink>
@@ -360,7 +360,7 @@ export default function AuthorPage() {
               value="info"
               className="cursor-pointer data-[state=active]:bg-emerald-100 dark:data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-800 dark:data-[state=active]:text-emerald-300 data-[state=active]:border data-[state=active]:border-emerald-300 dark:data-[state=active]:border-emerald-500/30 data-[state=active]:shadow-sm transition-all duration-200 py-2.5 px-4 rounded-md font-medium flex items-center justify-center gap-2 text-muted-foreground hover:text-emerald-700 dark:hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
             >
-              <User className="h-4 w-4" />
+              <Icon iconNode={featherPlus} className="h-4 w-4" />
               {t("author_info")}
             </TabsTrigger>
             <TabsTrigger
@@ -384,14 +384,14 @@ export default function AuthorPage() {
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="responsive-text-2xl font-bold flex items-center gap-3">
-                    <User className="h-6 w-6 text-emerald-500" />
+                    <Icon iconNode={featherPlus} className="h-6 w-6 text-emerald-500" />
                     {t("author_info")}
                   </CardTitle>
                   <Badge
                     variant="secondary"
                     className="bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900 dark:text-emerald-100 dark:border-emerald-700"
                   >
-                    <User className="h-3 w-3 mr-1" />
+                    <Icon iconNode={featherPlus} className="h-3 w-3 mr-1" />
                     {t("author")}
                   </Badge>
                 </div>
@@ -414,7 +414,7 @@ export default function AuthorPage() {
                         </h2>
                       </div>
                       <div className="flex items-center gap-1 text-muted-foreground">
-                        <User className="h-4 w-4 text-emerald-500" />
+                        <Icon iconNode={featherPlus} className="h-4 w-4 text-emerald-500" />
                         <span className="font-medium">{t("author")}</span>
                       </div>
                       <div className="flex items-center gap-1 text-muted-foreground">
