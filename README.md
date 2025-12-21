@@ -105,7 +105,7 @@ Bookly is a modern full-stack desktop application for managing and browsing your
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/Salafi-Coders/bookly.git
+   git clone https://github.com/yasiralamriki/bookly.git
    cd bookly
    ```
 
